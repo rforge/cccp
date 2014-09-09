@@ -1,0 +1,11 @@
+LPIC	Solving Linear Program with (linear) inequality constraints
+LPCC	Solving Linear Program with NNO, SOC and PSD constraints
+QPIC	Solving a Quadratic Program with equality and inequality constraints
+QPQC	Solving a Quadratic Program with quadratic (SOC) constraints
+QPUC	Solving an unconstrained Quadratic Program
+SOCP	SOCP with two second-order cone constraints
+SDP	SDP with two positive semidefinite cone constraints
+
+
+
+

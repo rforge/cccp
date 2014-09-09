@@ -1,0 +1,73 @@
+##
+## Import directives
+##
+import(methods)
+import(Matrix)
+import(numDeriv)
+##
+## Export of S4-classes
+##
+exportClasses(
+    "CPD",
+    "CPS",
+    "CTRL",
+    "DEFLP",
+    "DEFQP",
+    "KKTSLV",
+    "PDV",
+    "NNOV",
+    "NNOC",
+    "NNOS",
+    "PSDV",
+    "PSDC",
+    "PSDS",
+    "SOCV",
+    "SOCC",
+    "SOCS"
+    )
+##
+## Export of Methods
+##
+exportMethods(
+    "cps",
+    "dgap",
+    "dobj",
+    "gets",
+    "getx",
+    "gety",
+    "getz",
+    "kktRES",
+    "kktSOL",
+    "ntsc",
+    "ntsu",
+    "pobj",
+    "rcent",
+    "rdual",
+    "rprim",
+    "jdot",
+    "jnrm2",
+    "udot",
+    "uinv",
+    "umat",
+    "umsa",
+    "umss",
+    "unrm2",
+    "uone",
+    "uprd",
+    "uslb",
+    "usnt",
+    "uvec"
+    )
+##
+## Export of functions
+##
+export(
+    "cccp",
+    "cpd",
+    "ctrl",
+    "kktSOLVE",
+    "l1",
+    "nnoc",
+    "psdc",
+    "socc"
+    )
