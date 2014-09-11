@@ -1,7 +1,7 @@
 \name{uprd}
 \alias{uprd}
-\alias{uprd,NNOV,NNOV-method}
-\alias{uprd,NNOV,missing-method}
+\alias{uprd,LNLV,LNLV-method}
+\alias{uprd,LNLV,missing-method}
 \alias{uprd,SOCV,SOCV-method}
 \alias{uprd,SOCV,missing-method}
 \alias{uprd,PSDV,PSDV-method}
@@ -18,8 +18,8 @@
 }
 
 \usage{
-\S4method{uprd}{NNOV,NNOV}(u, v)  
-\S4method{uprd}{NNOV,missing}(u, v)  
+\S4method{uprd}{LNLV,LNLV}(u, v)  
+\S4method{uprd}{LNLV,missing}(u, v)  
 \S4method{uprd}{SOCV,SOCV}(u, v)  
 \S4method{uprd}{SOCV,missing}(u, v)  
 \S4method{uprd}{PSDV,PSDV}(u, v)  
@@ -27,9 +27,9 @@
 }
 
 \arguments{
-  \item{u}{A vector or an object of either S4-class \code{NNOV}, or
+  \item{u}{A vector or an object of either S4-class \code{LNLV}, or
   \code{SOCV}, or \code{PSDV}.} 
-  \item{v}{A vector or an object of either S4-class \code{NNOV}, or
+  \item{v}{A vector or an object of either S4-class \code{LNLV}, or
   \code{SOCV}, or \code{PSDV}.} 
 }
 
@@ -47,7 +47,7 @@
 
 \value{
   An S4-object of the corresponding class for cone variables,
-  \emph{e.g.}, \code{NNOV}.
+  \emph{e.g.}, \code{LNLV}.
 }
 
 \keyword{optimize}

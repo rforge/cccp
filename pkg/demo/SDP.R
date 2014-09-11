@@ -19,10 +19,10 @@ F3 <- Matrix(c(-5, 2, -17, 2, -6, 8, -17, 8, 6), nrow = 3, ncol = 3)
 F0 <- Matrix(c(14, 9, 40, 9, 91, 10, 40, 10, 15), nrow = 3, ncol = 3)
 psd2 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
 ## Using main function of package
-sdpsol <- cccp(q = q, conecon = list(psd1, psd2))
+sdpsol <- cccp(q = q, cList = list(psd1, psd2))
 sdpsol
 getx(sdpsol)
 ##
 ## Equivalently:
-sdpcpd <- cpd(P = NULL, q = q, conecon = list(psd1, psd2))
+sdpcpd <- cpd(P = NULL, q = q, cList = list(psd1, psd2))
 cps(sdpcpd)

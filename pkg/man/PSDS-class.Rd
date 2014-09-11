@@ -6,7 +6,8 @@
 \title{Class \code{"PSDS"}}
 
 \description{
-  Nesterov-Todd scalings and scaled Lagrange-multipliers.
+  Nesterov-Todd scalings and scaled Lagrange-multipliers for PSD
+  constraints. 
 }
 
 \section{Objects from the Class}{

@@ -12,7 +12,7 @@
 }
 
 \usage{
-cccp(P = NULL, q = NULL, A = NULL, b = NULL, conecon = list(), optctrl = ctrl())
+cccp(P = NULL, q = NULL, A = NULL, b = NULL, cList = list(), optctrl = ctrl())
 }
 
 \arguments{
@@ -22,7 +22,7 @@ cccp(P = NULL, q = NULL, A = NULL, b = NULL, conecon = list(), optctrl = ctrl())
       1} or \code{NULL}.}
   \item{A}{An object of class \code{Matrix} with dimension \eqn{p \times N}.}
   \item{b}{An object of class \code{vector} with dimension \eqn{p \times 1}.}
-  \item{conecon}{A \code{list} object containing the cone constraints.
+  \item{cList}{A \code{list} object containing the cone constraints.
     Elements must be of either S4-class \code{NNOC}, or \code{SOCC}, or
     \code{PSDC}.}
   \item{optctrl}{An object of S4-class \code{CTRL}.}

@@ -1,7 +1,7 @@
 ##
-## inverse of product of points in NNO cones
-setMethod("uinv", signature = c("NNOV", "NNOV"), function(u, v){
-    new("NNOV", u = u@u / v@u, dims = u@dims)
+## inverse of product of points in LNL cones
+setMethod("uinv", signature = c("LNLV", "LNLV"), function(u, v){
+    new(class(u), u = u@u / v@u, dims = u@dims)
 })
 ##
 ## inverse of product of points in SOC cones

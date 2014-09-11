@@ -6,7 +6,8 @@
 \title{Class \code{"NNOS"}}
 
 \description{
-  Nesterov-Todd scalings and scaled Lagrange-multipliers.
+  Nesterov-Todd scalings and scaled Lagrange-multipliers for linear
+  constraints. 
 }
 
 \section{Objects from the Class}{

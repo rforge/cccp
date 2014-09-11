@@ -1,6 +1,6 @@
 ##
-## Adjusting NNO-variable by maximum step-size
-setMethod("umsa", signature = "NNOV", function(u, alpha, init = TRUE){
+## Adjusting LNL-variable by maximum step-size
+setMethod("umsa", signature = "LNLV", function(u, alpha, init = TRUE){
     if(init){
         u@u <- u@u + (1 + alpha)
     } else {

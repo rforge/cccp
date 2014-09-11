@@ -8,6 +8,6 @@ test.QPIC <- function(){
     nno1 <- nnoc(G = G, h = h)
     A <- Matrix(c(1.0, 1.0), nrow = 1, ncol = 2)
     b <- 1.0
-    ans <- cccp(P = P, q = q, A = A, b = b, conecon = list(nno1))
+    ans <- cccp(P = P, q = q, A = A, b = b, cList = list(nno1))
     return()
 }

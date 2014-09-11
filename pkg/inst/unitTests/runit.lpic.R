@@ -7,6 +7,6 @@ test.LPIC <- function(){
                 nrow = 4, ncol = 2)
     h <- c(3, 3, 0, 0)
     nno1 <- nnoc(G = G, h = h)
-    ans <- cccp(q = q, conecon = list(nno1), optctrl = ctrl(trace = FALSE))
+    ans <- cccp(q = q, cList = list(nno1), optctrl = ctrl(trace = FALSE))
     return()
 }

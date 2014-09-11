@@ -7,7 +7,7 @@ setMethod("cps", signature = "DEFLP", function(cpd){
     ctrl <- cpd@ctrl
     n <- cpd@n
     idx <- 1:cpd@k
-    cc <- lapply(cpd@conecon, function(cc) cc@vclass)
+    cc <- lapply(cpd@cList, function(cc) cc@vclass)
     idxNSC <- integer(0)
     idxPSD <- which("PSDV" == cc)
     if(length(idxPSD) < 1){
@@ -15,14 +15,14 @@ setMethod("cps", signature = "DEFLP", function(cpd){
     } else {
         idxNSC <- idx[-idxPSD]
     }
-    m <- sum(unlist(lapply(cpd@conecon, function(cc) cc@dims)))
+    m <- sum(unlist(lapply(cpd@cList, function(cc) cc@dims)))
     sdv <- rep(NA, 3)
     names(sdv) <- c("dg", "dgi", "lg")
     cvgdvals <- rep(NA, 6)
     names(cvgdvals) <- c("pobj", "dobj", "pinf", "dinf", "gap", "k/t")
     CurSol <- new("CPS")
     CurPdv <- SolKkt2 <- SolKkt1 <- new("PDV")
-    hL <- lapply(cpd@conecon, function(x) x@h)
+    hL <- lapply(cpd@cList, function(x) x@h)
     hrz <- rz <- zeroList <- lapply(hL, function(h){
         h@u <- 0 * h@u
         h
@@ -33,7 +33,7 @@ setMethod("cps", signature = "DEFLP", function(cpd){
     ##
     ## Computing initial values of PDV / CPS and scalings
     ##
-    W <- lapply(cpd@conecon, ntsc)
+    W <- lapply(cpd@cList, ntsc)
     kktslv <- kktSLV(W, cpd)
     resx0 <- max(1, sqrt(udot(cpd@q)))
     resy0 <- max(1, sqrt(udot(drop(cpd@b))))
@@ -107,7 +107,7 @@ setMethod("cps", signature = "DEFLP", function(cpd){
     for(i in 0:(ctrl@maxiters + 1)){
         ## Evaluate residuals, gap and stopping criteria
         ## Dual residuals
-        hrx <- drop(-drop(crossprod(cpd@A, CurPdv@y)) - Reduce("+", lapply(idx, function(j) crossprod(cpd@conecon[[j]]@G, CurPdv@z[[j]]@u))))
+        hrx <- drop(-drop(crossprod(cpd@A, CurPdv@y)) - Reduce("+", lapply(idx, function(j) crossprod(cpd@cList[[j]]@G, CurPdv@z[[j]]@u))))
         hresx <- sqrt(udot(hrx))
         rx <- hrx - cpd@q * CurPdv@tau
         resx <- sqrt(udot(rx)) / CurPdv@tau
@@ -118,7 +118,7 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         resy <- sqrt(udot(ry)) / CurPdv@tau
         ## Centrality residuals
         hrz <- lapply(idx, function(j){
-            hrz[[j]]@u <- CurPdv@s[[j]]@u + cpd@conecon[[j]]@G %*% CurPdv@x
+            hrz[[j]]@u <- CurPdv@s[[j]]@u + cpd@cList[[j]]@G %*% CurPdv@x
             hrz[[j]]
         })
         hresz <- sum(unlist(lapply(hrz, function(r) unrm2(r))))
@@ -260,11 +260,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         if(class(ans1) == "try-error"){
             CurSol@x <- CurPdv@x / CurPdv@tau
             CurSol@y <- CurPdv@y / CurPdv@tau
-            CurSol@s <- lapply(CurSol@s, function(s){
+            CurSol@s <- lapply(CurPdv@s, function(s){
                 s@u <- s@u / CurPdv@tau
                 s
             })
-            CurSol@z <- lapply(CurSol@z, function(z){
+            CurSol@z <- lapply(CurPdv@z, function(z){
                 z@u <- z@u / CurPdv@tau
                 z
             })
@@ -472,7 +472,7 @@ setMethod("cps", signature = "DEFQP", function(cpd){
     ## QPs with inequality constraints
     ##
     idx <- 1:cpd@k
-    cc <- lapply(cpd@conecon, function(cc) cc@vclass)
+    cc <- lapply(cpd@cList, function(cc) cc@vclass)
     idxNSC <- integer(0)
     idxPSD <- which("PSDV" == cc)
     if(length(idxPSD) < 1){
@@ -480,10 +480,10 @@ setMethod("cps", signature = "DEFQP", function(cpd){
     } else {
         idxNSC <- idx[-idxPSD]
     }
-    m <- sum(unlist(lapply(cpd@conecon, function(cc) cc@dims)))
+    m <- sum(unlist(lapply(cpd@cList, function(cc) cc@dims)))
     cvgdvals <- rep(NA, 5)
     names(cvgdvals) <- c("pobj", "dobj", "pinf", "dinf", "gap")
-    hL <- lapply(cpd@conecon, function(x) x@h)
+    hL <- lapply(cpd@cList, function(x) x@h)
     hrz <- rz <- zeroList <- lapply(hL, function(h){
         h@u <- 0 * h@u
         h
@@ -494,7 +494,7 @@ setMethod("cps", signature = "DEFQP", function(cpd){
     ##
     ## Computing initial values of PDV / CPS and scalings
     ##
-    W <- lapply(cpd@conecon, ntsc)
+    W <- lapply(cpd@cList, ntsc)
     kktslv <- kktSLV(W, cpd)
     resx0 <- max(1, sqrt(udot(cpd@q)))
     resy0 <- max(1, sqrt(udot(drop(cpd@b))))
@@ -593,20 +593,11 @@ setMethod("cps", signature = "DEFQP", function(cpd){
         ## Solving for affine and combined direction in two-round for-loop
         ##
         for(ii in 0:1){
-            if(length(idxNSC) > 0){
-                SolKkt@s <- lapply(idxNSC, function(j){
-                    s <- lambdasq[[j]]
-                    s@u <- -lambdasq[[j]]@u + uone(CurPdv@s[[j]])@u * sigma * mu
-                    s
-                })
-            }
-            if(length(idxPSD) > 0){
-                SolKkt@s <- lapply(idxNSC, function(j){
-                    s <- lambdasq[[j]]
-                    s@u <- -lambdasq[[j]]@u + uone(SolKkt@s[[j]])@u * sigma * mu
-                    s
-                })
-            }
+            SolKkt@s <- lapply(idx, function(j){
+                s <- lambdasq[[j]]
+                s@u <- -lambdasq[[j]]@u + uone(CurPdv@s[[j]])@u * sigma * mu
+                s
+            })            
             SolKkt@x <- -rx
             SolKkt@y <- -ry
             SolKkt@z <- lapply(rz, function(z){

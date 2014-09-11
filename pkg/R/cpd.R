@@ -1,6 +1,6 @@
 ## Function for creating an object of either S4-class 'DEFLP' or 'DEFQP'
-cpd <- function(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl()){
-    k <- length(conecon)
+cpd <- function(P, q, A = NULL, b = NULL, cList = list(), optctrl = ctrl()){
+    k <- length(cList)
     if(is.null(P)){
         n <- length(q)
     } else {
@@ -29,7 +29,7 @@ cpd <- function(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl()){
             }
             G <- -diag(n)
             h <- rep(0, n)
-            conecon <-  list(nnoc(G = G, h = h))
+            cList <-  list(nnoc(G = G, h = h))
             k <- 1L
         }
         ans <- new("DEFLP",
@@ -38,7 +38,7 @@ cpd <- function(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl()){
                    b = b,
                    n = n,
                    k = k,
-                   conecon = conecon,
+                   cList = cList,
                    ctrl = optctrl)
         return(ans)
     } else {
@@ -49,7 +49,7 @@ cpd <- function(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl()){
                    b = b,
                    n = n,
                    k = k,
-                   conecon = conecon,
+                   cList = cList,
                    ctrl = optctrl)
         return(ans)
     }

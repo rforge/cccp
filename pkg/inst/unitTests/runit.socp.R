@@ -19,6 +19,6 @@ test.SOCP <- function(){
     d2 <- c(-3, 6, -10)
     f2 <- 27
     soc2 <- socc(F = F2, g = g2, d = d2, f = f2)
-    ans <- cccp(q = q, conecon = list(soc1, soc2), optctrl = ctrl(trace = FALSE))
+    ans <- cccp(q = q, cList = list(soc1, soc2), optctrl = ctrl(trace = FALSE))
     return()
 }

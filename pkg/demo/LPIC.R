@@ -10,10 +10,10 @@ G <- matrix(c(2, 1, -1, 0,
 h <- c(3, 3, 0, 0)
 nno1 <- nnoc(G = G, h = h)
 ## Using main function of package
-lpicsol <- cccp(q = q, conecon = list(nno1), optctrl = ctrl())
+lpicsol <- cccp(q = q, cList = list(nno1), optctrl = ctrl())
 lpicsol
 getx(lpicsol)
 ##
 ## Equivalently:
-lpiccpd <- cpd(P = NULL, q = q, conecon = list(nno1), optctrl = ctrl())
+lpiccpd <- cpd(P = NULL, q = q, cList = list(nno1), optctrl = ctrl())
 cps(lpiccpd)

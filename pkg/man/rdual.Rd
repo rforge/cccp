@@ -1,5 +1,6 @@
 \name{rdual}
 \alias{rdual}
+\alias{rdual,PDV,DEFNL-method}
 \alias{rdual,PDV,DEFLP-method}
 \alias{rdual,PDV,DEFQP-method}
 
@@ -14,6 +15,7 @@
 }
 
 \usage{
+\S4method{rdual}{PDV,DEFNL}(pdv, cpd)  
 \S4method{rdual}{PDV,DEFLP}(pdv, cpd)  
 \S4method{rdual}{PDV,DEFQP}(pdv, cpd)  
 }
@@ -36,7 +38,8 @@
 }
 
 \seealso{
-  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}}, \code{\linkS4class{PDV}}
+  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}},
+  \code{\linkS4class{DEFNL}}, \code{\linkS4class{PDV}}
 }
 
 \keyword{optimize}

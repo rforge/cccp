@@ -2,8 +2,8 @@
 \alias{udot}
 \alias{udot,numeric,numeric-method}
 \alias{udot,numeric,missing-method}
-\alias{udot,NNOV,NNOV-method}
-\alias{udot,NNOV,missing-method}
+\alias{udot,LNLV,LNLV-method}
+\alias{udot,LNLV,missing-method}
 \alias{udot,SOCV,SOCV-method}
 \alias{udot,SOCV,missing-method}
 \alias{udot,PSDV,PSDV-method}
@@ -22,8 +22,8 @@
 \usage{
 \S4method{udot}{numeric,numeric}(u, v)  
 \S4method{udot}{numeric,missing}(u, v)  
-\S4method{udot}{NNOV,NNOV}(u, v)  
-\S4method{udot}{NNOV,missing}(u, v)  
+\S4method{udot}{LNLV,LNLV}(u, v)  
+\S4method{udot}{LNLV,missing}(u, v)  
 \S4method{udot}{SOCV,SOCV}(u, v)  
 \S4method{udot}{SOCV,missing}(u, v)  
 \S4method{udot}{PSDV,PSDV}(u, v)  
@@ -31,7 +31,7 @@
 }
 
 \arguments{
-  \item{u}{A vector or an object of either S4-class \code{NNOV}, or
+  \item{u}{A vector or an object of either S4-class \code{LNLV}, or
   \code{SOCV}, or \code{PSDV}.} 
   \item{v}{An object of the same class as \code{u}.} 
 }

@@ -1,6 +1,6 @@
 \name{uvec}
 \alias{uvec}
-\alias{uvec,NNOV-method}
+\alias{uvec,LNLV-method}
 \alias{uvec,SOCV-method}
 \alias{uvec,PSDV-method}
 
@@ -15,7 +15,7 @@
 }
 
 \usage{
-\S4method{uvec}{NNOV}(u)  
+\S4method{uvec}{LNLV}(u)  
 \S4method{uvec}{SOCV}(u)  
 \S4method{uvec}{PSDV}(u)  
 }

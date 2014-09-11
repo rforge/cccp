@@ -1,6 +1,6 @@
 ##
 ## Generic for solving convex programs
-setGeneric("cps", function(cpd) standardGeneric("cps"))
+setGeneric("cps", function(cpd, ...) standardGeneric("cps"))
 ##
 ## Generic for value of primal objective
 setGeneric("pobj", function(pdv, cpd) standardGeneric("pobj"))
@@ -82,3 +82,6 @@ setGeneric("kktSOL", function(cpd, ...) standardGeneric("kktSOL"))
 ##
 ## Generic for computing residuals in KKT-system
 setGeneric("kktRES", function(cpd, u, v, ...) standardGeneric("kktRES"))
+##
+## Generic for initial point of primal and dual slack-variables
+setGeneric("initp", function(object) standardGeneric("initp"))

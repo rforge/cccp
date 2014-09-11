@@ -20,11 +20,11 @@ d = rep(0, 3)
 f = 1
 soc1 <- socc(F = F, g = g, d = d, f = f)
 ## Using main function of package
-qpqcsol <- cccp(P = P, q = q, conecon = list(nno1, soc1))
+qpqcsol <- cccp(P = P, q = q, cList = list(nno1, soc1))
 qpqcsol
 x <- getx(qpqcsol)
 round(sqrt(sum(x^2)))
 ##
 ## Equivalently:
-qpqccpd <- cpd(P = P, q = q, conecon = list(nno1, soc1))
+qpqccpd <- cpd(P = P, q = q, cList = list(nno1, soc1))
 cps(qpqccpd)

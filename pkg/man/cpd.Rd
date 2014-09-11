@@ -11,7 +11,7 @@
 }
 
 \usage{
-cpd(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl())
+cpd(P, q, A = NULL, b = NULL, cList = list(), optctrl = ctrl())
 }
 
 \arguments{
@@ -21,7 +21,7 @@ cpd(P, q, A = NULL, b = NULL, conecon = list(), optctrl = ctrl())
       n} or \code{NULL} for problems without equality constraints.}
   \item{b}{An object of class \code{vector} with dimension \eqn{p \times
       1} or \code{NULL} for problems without equality constraints.}
-  \item{conecon}{A \code{list} object containing the cone
+  \item{cList}{A \code{list} object containing the cone
     constraints. Elements must be of either S4-class \code{NNOC}, or
     \code{SOCC}, or \code{PSDC} or an empty list in case of no
     inequality constraints.}

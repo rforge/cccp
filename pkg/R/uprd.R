@@ -1,11 +1,11 @@
 ##
-## product of points in NNO cones
-setMethod("uprd", signature = c("NNOV", "NNOV"), function(u, v){
-    new("NNOV", u = u@u * v@u, dims = u@dims)
+## product of points in LNL cones
+setMethod("uprd", signature = c("LNLV", "LNLV"), function(u, v){
+    new(class(u), u = u@u * v@u, dims = u@dims)
 })
-setMethod("uprd", signature = c("NNOV", "missing"), function(u, v){
+setMethod("uprd", signature = c("LNLV", "missing"), function(u, v){
     ## similar to misc.ssqr
-    new("NNOV", u = u@u^2, dims = u@dims)
+    new(class(u), u = u@u^2, dims = u@dims)
 })
 ##
 ## product of points in SOC cones

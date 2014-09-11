@@ -4,8 +4,8 @@ setMethod("unrm2", signature = "numeric", function(u){
     sqrt(udot(u))
 })
 ##
-## Norm of a point in NNO cones
-setMethod("unrm2", signature = "NNOV", function(u){
+## Norm of a point in LNL cones
+setMethod("unrm2", signature = "LNLV", function(u){
     sqrt(udot(u))
 })
 ##

@@ -66,3 +66,17 @@ setMethod("ntsc", signature = c("PSDC", "missing"), function(s, z){
     lambda <- new("PSDV", u = Matrix(0, nrow = s@dims^2, ncol = 1), dims = s@dims)
     new("PSDS", W = list(r = r, rti = rti, lambda = lambda))
 })
+##
+## Compute Nesterov-Todd scalings for variables in nonlinear constraints
+setMethod("ntsc", signature = c("NLFV", "NLFV"), function(s, z){
+    dnl <- sqrt(s@u / z@u)
+    dnli <- sqrt(z@u / s@u)
+    lambda <- new("NLFV", u = sqrt(s@u * z@u), dims = s@dims)
+    new("NLFS", W = list(dnl = dnl, dnli = dnli, lambda = lambda))
+})
+## Initial scaling
+setMethod("ntsc", signature = c("NLFC", "missing"), function(s, z){
+    dnli <- dnl <- Matrix(1, nrow = s@dims, ncol = 1)
+    lambda <- new("NLFV", u = Matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
+    new("NLFS", W = list(dnl = dnl, dnli = dnli, lambda = lambda))
+})

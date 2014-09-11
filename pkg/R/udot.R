@@ -7,11 +7,11 @@ setMethod("udot", signature = c("numeric", "missing"), function(u, v){
     drop(crossprod(u))
 })
 ##
-## inner-product between points in NNO cones
-setMethod("udot", signature = c("NNOV", "NNOV"), function(u, v){
+## inner-product between points in LNL cones
+setMethod("udot", signature = c("LNLV", "LNLV"), function(u, v){
     drop(crossprod(u@u, v@u))
 })
-setMethod("udot", signature = c("NNOV", "missing"), function(u, v){
+setMethod("udot", signature = c("LNLV", "missing"), function(u, v){
     drop(crossprod(u@u))
 })
 ##

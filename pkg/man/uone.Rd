@@ -1,6 +1,6 @@
 \name{uone}
 \alias{uone}
-\alias{uone,NNOV-method}
+\alias{uone,LNLV-method}
 \alias{uone,SOCV-method}
 \alias{uone,PSDV-method}
 
@@ -15,13 +15,13 @@
 }
 
 \usage{
-\S4method{uone}{NNOV}(u)  
+\S4method{uone}{LNLV}(u)  
 \S4method{uone}{SOCV}(u)  
 \S4method{uone}{PSDV}(u)  
 }
 
 \arguments{
-  \item{u}{A vector or an object of either S4-class \code{NNOV}, or
+  \item{u}{A vector or an object of either S4-class \code{LNLV}, or
   \code{SOCV}, or \code{PSDV}.} 
 }
 
@@ -36,7 +36,7 @@
 
 \value{
   An S4-object of the corresponding class for cone variables,
-  \emph{e.g.}, \code{NNOV}.
+  \emph{e.g.}, \code{LNLV}.
 }
 
 \keyword{optimize}

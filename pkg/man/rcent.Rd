@@ -1,6 +1,8 @@
 \name{rcent}
 \alias{rcent}
-\alias{rcent,PDV,CPD-method}
+\alias{rcent,PDV,DEFNL-method}
+\alias{rcent,PDV,DEFLP-method}
+\alias{rcent,PDV,DEFQP-method}
 
 \title{
   Residuals of centrality constraints
@@ -11,13 +13,14 @@
 }
 
 \usage{
-\S4method{rcent}{PDV,CPD}(pdv, cpd)  
+\S4method{rcent}{PDV,DEFNL}(pdv, cpd)  
+\S4method{rcent}{PDV,DEFLP}(pdv, cpd)  
+\S4method{rcent}{PDV,DEFQP}(pdv, cpd)  
 }
 
 \arguments{
   \item{pdv}{An object of S4-class \code{PDV} for computing the dual residuals.}
   \item{cpd}{An object of the S4-class union \code{CPD}.}
-  
 }
 
 
@@ -32,7 +35,8 @@
 }
 
 \seealso{
-  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}}, \code{\linkS4class{PDV}}
+  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}},
+  \code{\linkS4class{DEFNL}}, \code{\linkS4class{PDV}}
 }
 
 \keyword{optimize}

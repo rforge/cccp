@@ -24,14 +24,14 @@ Objects can be created by calls of the form \code{new("DEFQP",
 	\times n)} matrix of the equality constraints (lhs).}
     \item{\code{b}:}{Object of class \code{"Matrix"}: A \eqn{(p
 	\times 1)} matrix of the equality constraints (rhs).}
-    \item{\code{conecon}:}{Object of class \code{"list"}: The elements
-      of \code{conecon} are the cone constraints, each of either
+    \item{\code{cList}:}{Object of class \code{"list"}: The elements
+      of \code{cList} are the cone constraints, each of either
       S4-class \code{NNOC}, or \code{SOCC}, or \code{PSDC}.}
     \item{\code{n}:}{Object of class \code{"integer"}: The count of
       variables in the objective function.}
     \item{\code{k}:}{Object of class \code{"integer"}: The count of
       cone constraints, \emph{i.e.}, the count of list elements in
-      \code{conecon}.}
+      \code{cList}.}
     \item{\code{ctrl}:}{Object of class \code{"CTRL"}: The control
       parameters used in the IP-algorithm.}
     \item{\code{title}:}{Object of class \code{"character"}: A brief

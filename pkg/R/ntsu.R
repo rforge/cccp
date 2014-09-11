@@ -60,3 +60,14 @@ setMethod("ntsu", signature = c("PSDS", "PSDV", "PSDV"), function(W, s, z){
     W@W[["lambda"]]@u <- l
     W
 })
+##
+## Update Nesterov-Todd scalings and lambda for variables pertinent to nonlinear constraints
+setMethod("ntsu", signature = c("NLFS", "NLFV", "NLFV"), function(W, s, z){
+    s <- sqrt(s@u)
+    z <- sqrt(z@u)
+    dnl <- W@W[["dnl"]] * s / z
+    dnli <- 1 / dnl
+    l <- W@W[["lambda"]]
+    l@u[, 1] <- s * z
+    new("NLFS", W = list(dnl = dnl, dnli = dnli, lambda = l))
+})

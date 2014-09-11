@@ -1,6 +1,6 @@
 ##
-## Scaling of NNO-points by Hessian of Log-Barrier function  
-setMethod("uslb", signature = c("NNOV", "NNOV"), function(u, lambda, inv = FALSE){
+## Scaling of LNL-points by Hessian of Log-Barrier function  
+setMethod("uslb", signature = c("LNLV", "LNLV"), function(u, lambda, inv = FALSE){
     if(inv){
         u@u <- u@u * lambda@u
     } else {

@@ -11,10 +11,10 @@ nno1 <- nnoc(G = G, h = h)
 A <- Matrix(c(1.0, 1.0), nrow = 1, ncol = 2)
 b <- 1.0
 ## Using main function of package
-qpicsol <- cccp(P = P, q = q, A = A, b = b, conecon = list(nno1))
+qpicsol <- cccp(P = P, q = q, A = A, b = b, cList = list(nno1))
 qpicsol
 getx(qpicsol)
 ##
 ## Equivalently:
-qpiccpd <- cpd(P = P, q = q, A = A, b = b, conecon = list(nno1))
+qpiccpd <- cpd(P = P, q = q, A = A, b = b, cList = list(nno1))
 cps(qpiccpd)

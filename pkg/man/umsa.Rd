@@ -1,6 +1,6 @@
 \name{umsa}
 \alias{umsa}
-\alias{umsa,NNOV-method}
+\alias{umsa,LNLV-method}
 \alias{umsa,SOCV-method}
 \alias{umsa,PSDV-method}
 
@@ -15,13 +15,13 @@
 }
 
 \usage{
-\S4method{umsa}{NNOV}(u, alpha, init = TRUE)  
+\S4method{umsa}{LNLV}(u, alpha, init = TRUE)  
 \S4method{umsa}{SOCV}(u, alpha, init = TRUE)  
 \S4method{umsa}{PSDV}(u, alpha, init = TRUE, sigma = NULL, lambda = NULL)  
 }
 
 \arguments{
-  \item{u}{An object of either S4-class \code{NNOV}, \code{SOCV} or
+  \item{u}{An object of either S4-class \code{LNLV}, \code{SOCV} or
     \code{PSDV}.}
   \item{alpha}{\code{numeric}, the maximim step size, ordinarily returned by a
     call to \code{maxs()}.}  

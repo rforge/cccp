@@ -1,6 +1,6 @@
 \name{uinv}
 \alias{uinv}
-\alias{uinv,NNOV,NNOV-method}
+\alias{uinv,LNLV,LNLV-method}
 \alias{uinv,SOCV,SOCV-method}
 \alias{uinv,PSDV,PSDV-method}
 
@@ -16,13 +16,13 @@
 }
 
 \usage{
-\S4method{uinv}{NNOV,NNOV}(u, v)  
+\S4method{uinv}{LNLV,LNLV}(u, v)  
 \S4method{uinv}{SOCV,SOCV}(u, v)  
 \S4method{uinv}{PSDV,PSDV}(u, v)  
 }
 
 \arguments{
-  \item{u}{An object of either S4-class \code{NNOV}, or \code{SOCV}, or
+  \item{u}{An object of either S4-class \code{LNLV}, or \code{SOCV}, or
   \code{PSDV}.}
   \item{v}{An object of the same S4-class as \code{u}.} 
 }

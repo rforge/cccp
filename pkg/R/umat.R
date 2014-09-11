@@ -1,6 +1,6 @@
 ##
-## umat-method for objects of class NNOV
-setMethod(f = "umat", "NNOV", definition = function(u){
+## umat-method for objects of class union LNLV
+setMethod(f = "umat", "LNLV", definition = function(u){
     u
 })
 ##

@@ -6,7 +6,8 @@
 \title{Class \code{"SOCS"}}
 
 \description{
-  Nesterov-Todd scalings and scaled Lagrange-multipliers.
+  Nesterov-Todd scalings and scaled Lagrange-multipliers for SOC
+  constraints. 
 }
 
 \section{Objects from the Class}{

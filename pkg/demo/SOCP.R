@@ -23,10 +23,10 @@ d2 <- c(-3, 6, -10)
 f2 <- 27
 soc2 <- socc(F = F2, g = g2, d = d2, f = f2)
 ## Using main function of package
-socpsol <- cccp(q = q, conecon = list(soc1, soc2))
+socpsol <- cccp(q = q, cList = list(soc1, soc2))
 socpsol
 getx(socpsol)
 ##
 ## Equivalently:
-socpcpd <- cpd(P = NULL, q = q, conecon = list(soc1, soc2))
+socpcpd <- cpd(P = NULL, q = q, cList = list(soc1, soc2))
 cps(socpcpd)

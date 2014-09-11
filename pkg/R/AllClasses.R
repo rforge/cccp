@@ -8,13 +8,15 @@ setClass("CTRL", representation(maxiters = "integer",
                                 feastol = "numeric",
                                 refine = "logical",
                                 stepadj = "numeric",
+                                alpha = "numeric",
+                                beta = "numeric",
                                 trace = "logical",
                                 method = "character"))
 ## S4-class for linear program definition
 setClass("DEFLP", representation(q = "vector",
                                  A = "Matrix",
                                  b = "Matrix",
-                                 conecon = "list",
+                                 cList = "list",
                                  n = "integer",
                                  k = "integer",
                                  ctrl = "CTRL",
@@ -25,14 +27,28 @@ setClass("DEFQP", representation(P = "Matrix",
                                  q = "vector",
                                  A = "Matrix",
                                  b = "Matrix",
-                                 conecon = "list",
+                                 cList = "list",
                                  n = "integer",
                                  k = "integer",
                                  ctrl = "CTRL",
                                  title = "character"),
          prototype = list(title = "Quadratic Program"))
+## S4-class for linar program with non-linear constraints definition
+setClass("DEFNL", representation(x0 = "vector",
+                                 q = "vector",
+                                 nlfList = "list",
+                                 cList = "list",
+                                 A = "Matrix",
+                                 b = "Matrix",
+                                 k = "integer",
+                                 n = "integer",
+                                 mnl = "integer",
+                                 ctrl = "CTRL",
+                                 H = "Matrix",
+                                 title = "character"),
+         prototype = list(title = "Linear Program with non-linear constraints"))
 ## S4-class union of convex programs
-setClassUnion("CPD", members = c("DEFLP", "DEFQP"))
+setClassUnion("CPD", members = c("DEFLP", "DEFQP", "DEFNL"))
 ##
 ## S4-class for solving KKT-system
 setClass("KKTSLV", representation(f = "function",
@@ -131,3 +147,21 @@ setClass("PSDC", representation(
 setClass("PSDS", representation(
     W = "list")
          )
+## NLF-variable
+setClass("NLFV", representation(
+    u = "Matrix",
+    dims = "integer")
+         )
+## NLF-constraint
+setClass("NLFC", representation(
+    G = "Matrix",
+    h = "NLFV",
+    dims = "integer",
+    vclass = "character")
+         )
+## NLF-scaling
+setClass("NLFS", representation(
+    W = "list")
+         )
+## S4-class union of variables pertinent to linear and nonlinear constraints
+setClassUnion("LNLV", members = c("NNOV", "NLFV"))

@@ -1,5 +1,6 @@
 \name{dobj}
 \alias{dobj}
+\alias{dobj,PDV,DEFNL-method}
 \alias{dobj,PDV,DEFLP-method}
 \alias{dobj,PDV,DEFQP-method}
 
@@ -8,10 +9,12 @@
 }
 
 \description{
-  Returns the value of the dual objective function evaluated at the point \code{x}. 
+  Returns the value of the dual objective function evaluated at the
+  point \code{x}.  
 }
 
 \usage{
+\S4method{dobj}{PDV,DEFNL}(pdv, cpd)  
 \S4method{dobj}{PDV,DEFLP}(pdv, cpd)  
 \S4method{dobj}{PDV,DEFQP}(pdv, cpd)  
 }
@@ -22,6 +25,10 @@
 }
 
 \details{
+  For linear programs with nonlinear inequality constraints the dual
+  objective is defined as: 
+  \deqn{L(x, y, znl, zl) = q'x + znl'* f(x) + zl'*(G x - h) + y'(A x - b)}
+  
   For linear programs the dual objective is defined as:
   \deqn{L(y, z) = -h'z - b'y}
 
@@ -34,7 +41,8 @@
 }
 
 \seealso{
-  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}}, \code{\linkS4class{PDV}}
+  \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}},
+  \code{\linkS4class{DEFNL}}, \code{\linkS4class{PDV}}
 }
 
 \keyword{optimize}

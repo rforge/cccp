@@ -20,7 +20,7 @@ l1 <- function(P, q = NULL, optctrl = ctrl()){
     h <- Matrix(c(q, -q), nrow = m + m, ncol = 1)
     nno1 <- nnoc(G = G, h = h)
     ## Defining LP and solving
-    l1cpd <- cpd(P = NULL, q = target, conecon = list(nno1), optctrl = optctrl)
+    l1cpd <- cpd(P = NULL, q = target, cList = list(nno1), optctrl = optctrl)
     l1cps <- cps(l1cpd)
     l1cps
 }

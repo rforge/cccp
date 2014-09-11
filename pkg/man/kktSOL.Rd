@@ -1,5 +1,6 @@
 \name{kktSOL}
 \alias{kktSOL}
+\alias{kktSOL,DEFNL-method}
 \alias{kktSOL,DEFLP-method}
 \alias{kktSOL,DEFQP-method}
 
@@ -12,7 +13,9 @@
 }
 
 \usage{
-\S4method{kktSOL}{DEFLP}(cpd, SolKkt2, SolKkt1, W, WhL, sdv, kktslv, refine = FALSE)  
+\S4method{kktSOL}{DEFNL}(cpd, SolKkt, W, kktslv, refine = FALSE)  
+\S4method{kktSOL}{DEFLP}(cpd, SolKkt2, SolKkt1, W, WhL, sdv,
+                         kktslv, refine = FALSE)  
 \S4method{kktSOL}{DEFQP}(cpd, SolKkt, W, kktslv, refine = FALSE)  
 }
 

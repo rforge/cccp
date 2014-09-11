@@ -1,7 +1,7 @@
 ##
-## One-element for points in NNO cones
-setMethod("uone", signature = "NNOV", function(u){
-    new("NNOV", u = Matrix(1, nrow = u@dims, ncol = 1), dims = u@dims)
+## One-element for points in LNL cones
+setMethod("uone", signature = "LNLV", function(u){
+    new(class(u), u = Matrix(1, nrow = u@dims, ncol = 1), dims = u@dims)
 })
 ##
 ## One-element for points in SOC cones

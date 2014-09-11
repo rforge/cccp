@@ -38,10 +38,10 @@ F0 <- Matrix(c(68, -30, -19,
               nrow = 3, ncol = 3, byrow = TRUE)
 psd1 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
 ## Using main function of package
-lpccsol <- cccp(q = q, conecon = list(nno1, soc1, psd1))
+lpccsol <- cccp(q = q, cList = list(nno1, soc1, psd1))
 lpccsol
 getx(lpccsol)
 ##
 ## Equivalently:
-lpcccpd <- cpd(P = NULL, q = q, conecon = list(nno1, soc1, psd1))
+lpcccpd <- cpd(P = NULL, q = q, cList = list(nno1, soc1, psd1))
 cps(lpcccpd)

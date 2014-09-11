@@ -15,6 +15,6 @@ test.SDP <- function(){
     F0 <- Matrix(c(14, 9, 40, 9, 91, 10, 40, 10, 15), nrow = 3, ncol = 3)
     psd2 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
     ## Using main function of package
-    ans <- cccp(q = q, conecon = list(psd1, psd2), optctrl = ctrl(trace = FALSE))
+    ans <- cccp(q = q, cList = list(psd1, psd2), optctrl = ctrl(trace = FALSE))
     return()
 }

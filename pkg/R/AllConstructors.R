@@ -1,7 +1,8 @@
 ##
 ## Function for creating 'CTRL' objects 
 ctrl <- function(maxiters = 100L, abstol = 1e-7, reltol = 1e-6, feastol = 1e-7,
-                 refine = FALSE, stepadj = 0.95, trace = TRUE, method = c("solve")){
+                 refine = FALSE, stepadj = 0.95, alpha = 0.01, beta = 0.5, trace = TRUE,
+                 method = c("solve")){
     method <- match.arg(method)
     new("CTRL",
         maxiters = as.integer(maxiters),
@@ -10,6 +11,8 @@ ctrl <- function(maxiters = 100L, abstol = 1e-7, reltol = 1e-6, feastol = 1e-7,
         feastol = feastol,
         refine = refine,
         stepadj = stepadj,
+        alpha = alpha,
+        beta = beta,
         trace = trace,
         method = method)
 }
@@ -35,4 +38,10 @@ psdc <- function(Flist, F0){
     G <- Matrix(do.call("cbind", lapply(Flist, as, "vector")))
     h <- new("PSDV", u = Matrix(as(F0, "vector"), ncol = 1), dims = m)
     new("PSDC", G = G, h = h, dims = m, vclass = "PSDV")        
+}
+##
+## Function for creating 'NLFC' objects 
+nlfc <- function(G, h){
+    h <- new("NLFV", u = Matrix(h), dims = nrow(G))
+    new("NLFC", G = Matrix(G), h = h, dims = nrow(G), vclass = "NLFV")    
 }

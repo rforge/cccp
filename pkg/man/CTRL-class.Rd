@@ -29,6 +29,10 @@ or more conveniently by invoking \code{ctrl()}.
       iterative refinement should be applied.}
     \item{\code{stepadj}:}{Object of class \code{"numeric"}: Step size
       adjustment in combined step.}
+    \item{\code{alpha}:}{Object of class \code{"numeric"}: Parameter in
+      backtracking line search.}
+    \item{\code{beta}:}{Object of class \code{"numeric"}: Parameter in
+      backtracking line search.}
     \item{\code{trace}:}{Object of class \code{"logical"}: \code{TRUE}
       if solver's progress should be returned during iterations,
       otherwise \code{FALSE}.}

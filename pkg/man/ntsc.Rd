@@ -1,5 +1,7 @@
 \name{ntsc}
 \alias{ntsc}
+\alias{ntsc,NLFV,NLFV-method}
+\alias{ntsc,NLFC,missing-method}
 \alias{ntsc,NNOV,NNOV-method}
 \alias{ntsc,NNOC,missing-method}
 \alias{ntsc,SOCV,SOCV-method}
@@ -19,6 +21,8 @@
 }
 
 \usage{
+\S4method{ntsc}{NLFV,NLFV}(s, z)  
+\S4method{ntsc}{NLFC,missing}(s, z)  
 \S4method{ntsc}{NNOV,NNOV}(s, z)  
 \S4method{ntsc}{NNOC,missing}(s, z)  
 \S4method{ntsc}{SOCV,SOCV}(s, z)  
@@ -34,13 +38,15 @@
 }
 
 \seealso{
+  \code{\linkS4class{NLFV}}, \code{\linkS4class{NLFC}}, 
   \code{\linkS4class{NNOV}}, \code{\linkS4class{NNOC}}, 
   \code{\linkS4class{SOCV}}, \code{\linkS4class{SOCC}}, 
   \code{\linkS4class{PSDV}}, \code{\linkS4class{PSDC}}, 
 }
 
 \value{
-  An object of either S4-class \code{NNOS} or \code{SOCS} or \code{PSDS}.
+  An object of either S4-class \code{NLFS}, or \code{NNOS}, or
+  \code{SOCS}, or \code{PSDS}. 
 }
 
 \keyword{Optimize}

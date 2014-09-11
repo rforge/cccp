@@ -1,7 +1,7 @@
 \name{unrm2}
 \alias{unrm2}
 \alias{unrm2,numeric-method}
-\alias{unrm2,NNOV-method}
+\alias{unrm2,LNLV-method}
 \alias{unrm2,SOCV-method}
 \alias{unrm2,PSDV-method}
 
@@ -16,13 +16,13 @@
 
 \usage{
 \S4method{unrm2}{numeric}(u)  
-\S4method{unrm2}{NNOV}(u)  
+\S4method{unrm2}{LNLV}(u)  
 \S4method{unrm2}{SOCV}(u)  
 \S4method{unrm2}{PSDV}(u)  
 }
 
 \arguments{
-  \item{u}{A vector or an object of either S4-class \code{NNOV},
+  \item{u}{A vector or an object of either S4-class \code{LNLV},
   \code{SOCV}, or \code{PSDV}.} 
 }
 

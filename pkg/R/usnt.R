@@ -52,3 +52,15 @@ setMethod("usnt", signature = c("Matrix", "PSDS"), function(u, W, trans = FALSE,
     }
     new("PSDV", u = u, dims = m)
 })
+##
+## Nesterov-Todd scaling for NLC-points
+## scaling with Matrix
+setMethod("usnt", signature = c("Matrix", "NLFS"), function(u, W, trans = FALSE, inv = FALSE){
+    if(inv){
+        w <- W@W[["dnli"]]
+    } else {
+        w <- W@W[["dnl"]]
+    }
+    for(j in 1:ncol(u)) u[, j] <- u[, j] * w
+    new("NLFV", u = u, dims = nrow(u))
+})

@@ -7,7 +7,7 @@
 \title{Class \code{"CPD"}}
 
 \description{
-  Class union of \code{DEFLP} and \code{DEFQP}.
+  Class union of \code{DEFLP}, \code{DEFQP} and \code{DEFNL}.
 }
 
 \section{Objects from the Class}{A virtual Class: No objects may be created from it.}

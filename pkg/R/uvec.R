@@ -1,6 +1,6 @@
 ##
-## uvec-method for NNOV
-setMethod("uvec", signature = "NNOV", function(u){
+## uvec-method for objects of class union LNLV
+setMethod("uvec", signature = "LNLV", function(u){
     u
 })
 ##

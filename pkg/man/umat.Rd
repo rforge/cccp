@@ -1,6 +1,6 @@
 \name{umat}
 \alias{umat}
-\alias{umat,NNOV-method}
+\alias{umat,LNLV-method}
 \alias{umat,SOCV-method}
 \alias{umat,PSDV-method}
 
@@ -16,8 +16,7 @@
 }
 
 \usage{
-umat(u)
-\S4method{umat}{NNOV}(u)  
+\S4method{umat}{LNLV}(u)  
 \S4method{umat}{SOCV}(u)  
 \S4method{umat}{PSDV}(u)  
 }
