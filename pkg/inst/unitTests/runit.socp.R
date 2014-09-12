@@ -20,5 +20,8 @@ test.SOCP <- function(){
     f2 <- 27
     soc2 <- socc(F = F2, g = g2, d = d2, f = f2)
     ans <- cccp(q = q, cList = list(soc1, soc2), optctrl = ctrl(trace = FALSE))
+    checkTrue(ans@status == "optimal")
+    checkTrue(ans@certp <= 1e-7)
+    checkTrue(ans@certd <= 1e-7)
     return()
 }

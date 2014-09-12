@@ -9,5 +9,8 @@ test.QPIC <- function(){
     A <- Matrix(c(1.0, 1.0), nrow = 1, ncol = 2)
     b <- 1.0
     ans <- cccp(P = P, q = q, A = A, b = b, cList = list(nno1))
+    checkTrue(ans@status == "optimal")
+    checkTrue(ans@certp <= 1e-7)
+    checkTrue(ans@certd <= 1e-7)
     return()
 }

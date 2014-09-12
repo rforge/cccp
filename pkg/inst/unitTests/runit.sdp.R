@@ -16,5 +16,8 @@ test.SDP <- function(){
     psd2 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
     ## Using main function of package
     ans <- cccp(q = q, cList = list(psd1, psd2), optctrl = ctrl(trace = FALSE))
+    checkTrue(ans@status == "optimal")
+    checkTrue(ans@certp <= 1e-7)
+    checkTrue(ans@certd <= 1e-7)
     return()
 }

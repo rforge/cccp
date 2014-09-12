@@ -36,5 +36,8 @@ test.LPCC <- function(){
                  nrow = 3, ncol = 3, byrow = TRUE)
     psd1 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
     ans <- cccp(q = q, cList = list(nno1, soc1, psd1), optctrl = ctrl(trace = FALSE))
+    checkTrue(ans@status == "optimal")
+    checkTrue(ans@certp <= 1e-7)
+    checkTrue(ans@certd <= 1e-7)
     return()
 }

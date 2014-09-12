@@ -27,7 +27,7 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
     }
     ## creating initial NLFC object and adding to cList as first object
     h <- new("NLFV", u = Matrix(0, nrow = mnl), dims = mnl)
-    nlfc <- new("NLFC", G = Matrix(0, nrow = mnl, ncol = n), h = h, dims = mnl)
+    nlfc <- new("NLFC", G = Matrix(0, nrow = mnl, ncol = n), h = h, dims = mnl, vclass = "NLFV")
     cList <- c(nlfc, cList)
     ## Equality constraints
     if(is.null(A)){
@@ -53,11 +53,11 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
                  cList = cList,
                  A = A,
                  b = b,
-                 k = k,
+                 k = k + 1L,
                  n = n,
                  mnl = mnl,
                  H = Matrix(0, nrow = n, ncol = n),
                  ctrl = optctrl)
-    ## Next, call to cps()
-    return(cpdef)   
+    cpsol <- cps(cpdef)
+    return(cpsol)   
 }

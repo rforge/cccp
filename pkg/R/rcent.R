@@ -22,7 +22,7 @@ setMethod("rcent", signature = c("PDV", "DEFNL"), function(pdv, cpd){
     ans1 <- pdv@s[[1]]
     ans1@u <- pdv@s[[1]]@u + cpd@cList[[1]]@h@u
     
-    ans2 <- lapply(2:(cpd@k + 1), function(j){
+    ans2 <- lapply(2:cpd@k, function(j){
         ans <- pdv@s[[j]]
         ans@u <- pdv@s[[j]]@u + cpd@cList[[j]]@G %*% pdv@x - cpd@cList[[j]]@h@u
         ans

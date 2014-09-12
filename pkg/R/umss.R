@@ -1,6 +1,6 @@
 ##
 ## Maximum step-size for NNO-variables
-setMethod("umss", signature = "NNOV", function(u){
+setMethod("umss", signature = "LNLV", function(u){
     list(ms = -min(u@u), evd = NULL)
 })
 ##

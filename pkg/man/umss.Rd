@@ -1,6 +1,6 @@
 \name{umss}
 \alias{umss}
-\alias{umss,NNOV-method}
+\alias{umss,LNLV-method}
 \alias{umss,SOCV-method}
 \alias{umss,PSDV-method}
 
@@ -15,20 +15,20 @@
 }
 
 \usage{
-\S4method{umss}{NNOV}(u)  
+\S4method{umss}{LNLV}(u)  
 \S4method{umss}{SOCV}(u)  
 \S4method{umss}{PSDV}(u)  
 }
 
 \arguments{
-  \item{u}{An object of either S4-class \code{NNOV}, \code{SOCV}, or
+  \item{u}{An object of either S4-class \code{LNLV}, \code{SOCV}, or
     \code{PSDV}.}
 }
 
 \value{
   A named \code{list} object with two elements: element \sQuote{\code{ms}} for the
   maximum step size and element \sQuote{\code{evd}} for the eigen value
-  decomposition. For objects of either S4-class \code{NNOV} or
+  decomposition. For objects of either S4-class \code{LNLV} or
   \code{SOCV}, this element is set to \code{NULL}.
 }
 
