@@ -851,7 +851,6 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 z
             })
             SolKkt <- try(kktSOL(cpd, SolKkt, W, kktslv, refine = ctrl@refine))
-            class(cpd) == "DEFNL"
             if(class(SolKkt) == "try-error"){
                 CurSol@x <- CurPdv@x
                 CurSol@y <- CurPdv@y
@@ -873,7 +872,7 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 return(CurSol)
             }
             
-            ## ds o dz for Mehrotra correction
+            ## Inner product ds'*dz and unscaled steps used in line search.
             dsdz <- sum(unlist(lapply(idx, function(j) udot(SolKkt@s[[j]], SolKkt@z[[j]]))))
             ## unscaling slack-variables
             dsu <- lapply(idx, function(j) usnt(SolKkt@s[[j]]@u, W[[j]], inv = FALSE, trans = TRUE))
@@ -885,8 +884,8 @@ setMethod("cps", signature = "DEFNL", function(cpd){
             MaxStepS <- lapply(SolKkt@s, umss)
             MaxStepZ <- lapply(SolKkt@z, umss)
 
-            ts <- max(unlist(lapply(MaxStepS, function(x) x$ms)))
-            tz <- max(unlist(lapply(MaxStepZ, function(x) x$ms)))
+            ts <- max(unlist(lapply(MaxStepS, function(x) Re(x$ms))))
+            tz <- max(unlist(lapply(MaxStepZ, function(x) Re(x$ms))))
             tm <- max(c(0, ts, tz))
 
             if(tm == 0.0){
@@ -950,7 +949,7 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 newgap <- (1.0 - (1.0 - sigma) * step) * gap + step^2 * dsdz
                 newphi <- theta1 * newgap + theta2 * newresx + theta3 * newresznl
 
-                if(i == 0){
+                if(ii == 0){
                     check1 <- newgap <= (1.0 - ctrl@alpha * step) * gap
                     check2 <- (RelaxedIters >= 0) && (RelaxedIters < MaxRelaxedIters)
                     check3 <- newphi <= phi + ctrl@alpha * step * dphi
@@ -1040,7 +1039,7 @@ setMethod("cps", signature = "DEFNL", function(cpd){
         CurPdv@x <- CurPdv@x + step * SolKkt@x
         CurPdv@y <- CurPdv@y + step * SolKkt@y    
       
-         if(length(idxNSC) > 0){
+        if(length(idxNSC) > 0){
             for(j in idxNSC){
                 SolKkt@s[[j]] <- umsa(SolKkt@s[[j]], alpha = step, init = FALSE)
                 SolKkt@z[[j]] <- umsa(SolKkt@z[[j]], alpha = step, init = FALSE)
@@ -1051,14 +1050,14 @@ setMethod("cps", signature = "DEFNL", function(cpd){
 
         if(length(idxPSD) > 0){
             for(j in idxPSD){
-                s <- Matrix(MaxStepS[[j]]$evd$vectors)
+                s <- Matrix(Re(MaxStepS[[j]]$evd$vectors))
                 dim(s) <- c(SolKkt@s[[j]]@dims^2, 1)
                 SolKkt@s[[j]]@u <- s
-                sigs <- MaxStepS[[j]]$evd$values
-                z <- Matrix(MaxStepZ[[j]]$evd$vectors)
+                sigs <- Re(MaxStepS[[j]]$evd$values)
+                z <- Matrix(Re(MaxStepZ[[j]]$evd$vectors))
                 dim(z) <- c(SolKkt@z[[j]]@dims^2, 1)
                 SolKkt@z[[j]]@u <- z
-                sigz <- MaxStepZ[[j]]$evd$values
+                sigz <- Re(MaxStepZ[[j]]$evd$values)
 
                 SolKkt@s[[j]] <- uslb(u = SolKkt@s[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)
                 SolKkt@z[[j]] <- uslb(u = SolKkt@z[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)

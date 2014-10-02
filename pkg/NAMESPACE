@@ -11,6 +11,7 @@ exportClasses(
     "CPD",
     "CPS",
     "CTRL",
+    "DEFCP",
     "DEFLP",
     "DEFQP",
     "DEFNL",
@@ -35,6 +36,7 @@ exportClasses(
 ##
 exportMethods(
     "cps",
+    "coerce",
     "dgap",
     "dobj",
     "gets",
@@ -71,6 +73,7 @@ export(
     "cccp",
     "cpd",
     "cpl",
+    "cpn",
     "ctrl",
     "kktSOLVE",
     "l1",

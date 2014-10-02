@@ -23,7 +23,7 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
     fDom <- unlist(lapply(nlfList, function(fcc) fcc(x0)))
     idxnan <- which(is.nan(fDom))
     if(any(idxnan)){
-        stop(paste("Initial point 'x0' is not in the domain of nonlinear cone constraints: ", idxnan, ".\n", sep = ""))
+        stop(paste("Initial point 'x0' is not in the domain of nonlinear convex constraint(s): ", idxnan, ".\n", sep = ""))
     }
     ## creating initial NLFC object and adding to cList as first object
     h <- new("NLFV", u = Matrix(0, nrow = mnl), dims = mnl)

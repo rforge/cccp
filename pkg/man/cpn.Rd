@@ -1,8 +1,8 @@
-\name{cpl}
-\alias{cpl}
+\name{cpn}
+\alias{cpn}
 
 \title{
-  Linear program with nonlinear constraints
+  Convex program with nonlinear constraints
 }
 
 \description{
@@ -11,7 +11,7 @@
 }
 
 \usage{
-cpl(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL,
+cpn(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL,
     optctrl = ctrl())
 }
 
@@ -19,8 +19,8 @@ cpl(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL,
   \item{x0}{An object of class \code{vector} with dimension \eqn{n
       \times 1} for the initial values. The point \code{x0} must be in
     the domain of the nonlinear constraints.}
-  \item{q}{\code{vector} of length \eqn{n} for the coefficients in the
-    objective.}
+  \item{f0}{\code{function}: the convex and twice-differentiable
+    objective function (its first argument must be \sQuote{\code{x}}).}
   \item{nlfList}{A \code{list} object containing the nonlinear
     constraints as its elements. The functions have to be specified with
     \code{x} as their first argument and must be casted in implicit
@@ -37,7 +37,7 @@ cpl(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL,
 }
 
 \value{
-  An object of S4-class \code{CPS}.
+  Currently returns an object of S4-class \code{DEFCP}.
 }
 
 \keyword{optimize}

@@ -20,6 +20,6 @@ setMethod("initp", signature = "SOCC", function(object){
 setMethod("initp", signature = "PSDC", function(object){
     p <- Diagonal(object@dims)
     dim(p) <- c(object@dims^2, 1)
-    new("SOCV", u = p, dims = object@dims)
+    new("PSDV", u = p, dims = object@dims)
 })
 

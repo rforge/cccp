@@ -47,8 +47,22 @@ setClass("DEFNL", representation(x0 = "vector",
                                  H = "Matrix",
                                  title = "character"),
          prototype = list(title = "Linear Program with non-linear constraints"))
+## S4-class for convex program with non-linear constraints definition
+setClass("DEFCP", representation(x0 = "vector",
+                                 f0 = "function",
+                                 nlfList = "list",
+                                 cList = "list",
+                                 A = "Matrix",
+                                 b = "Matrix",
+                                 k = "integer",
+                                 n = "integer",
+                                 mnl = "integer",
+                                 ctrl = "CTRL",
+                                 H = "Matrix",
+                                 title = "character"),
+         prototype = list(title = "Convex Program with non-linear constraints"))
 ## S4-class union of convex programs
-setClassUnion("CPD", members = c("DEFLP", "DEFQP", "DEFNL"))
+setClassUnion("CPD", members = c("DEFLP", "DEFQP", "DEFNL", "DEFCP"))
 ##
 ## S4-class for solving KKT-system
 setClass("KKTSLV", representation(f = "function",

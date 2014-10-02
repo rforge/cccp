@@ -11,14 +11,13 @@ setMethod("show", signature = "CPD", function(object){
     cat(paste("Count of variables in objective:", object@n, "\n"))
     cat(paste("Count of equality constraints:", nrow(object@A), "\n"))
     if(class(object) == "DEFNL"){
+        countcc <- object@k - 1L
         cat(paste("Count of nonlinear constraints:", object@mnl, "\n"))
-    }
-    cat(paste("Count of cone constraints:", object@k, "\n"))
-    if(class(object) == "DEFNL"){
-        cc <- unlist(lapply(object@cList, function(x) class(x)))
     } else {
-        cc <- unlist(lapply(object@cList, function(x) class(x)))
+        countcc <- object@k
     }
+    cat(paste("Count of cone constraints:", countcc, "\n"))
+    cc <- unlist(lapply(object@cList, function(x) class(x)))
     cat("These consist of:\n")
     cat(paste("Constraints w.r.t. the nonnegative orthant:", max(0, sum(cc %in% "NNOC")), "\n"))
     cat(paste("Constraints w.r.t. the second-order cone:", max(0, sum(cc %in% "SOCC")), "\n"))
