@@ -10,6 +10,7 @@ setClass("CTRL", representation(maxiters = "integer",
                                 stepadj = "numeric",
                                 alpha = "numeric",
                                 beta = "numeric",
+                                maxreliter = "integer",
                                 trace = "logical",
                                 method = "character"))
 ## S4-class for linear program definition
@@ -48,7 +49,8 @@ setClass("DEFNL", representation(x0 = "vector",
                                  title = "character"),
          prototype = list(title = "Linear Program with non-linear constraints"))
 ## S4-class for convex program with non-linear constraints definition
-setClass("DEFCP", representation(x0 = "vector",
+setClass("DEFCP", representation(q = "vector",
+                                 x0 = "vector",
                                  f0 = "function",
                                  nlfList = "list",
                                  cList = "list",

@@ -14,7 +14,7 @@
 \usage{
 ctrl(maxiters = 100L, abstol = 1e-07, reltol = 1e-06,
      feastol = 1e-07, refine = FALSE, stepadj = 0.95, alpha = 0.01,
-     beta = 0.5, trace = TRUE, method = c("solve"))
+     beta = 0.5, maxreliter = 8L, trace = TRUE, method = c("solve"))
 }
 
 \arguments{
@@ -30,6 +30,7 @@ ctrl(maxiters = 100L, abstol = 1e-07, reltol = 1e-06,
   \item{stepadj}{\code{numeric}, step size adjustment in combined step.}
   \item{alpha}{\code{numeric}, parameter in backtracking line search.}
   \item{beta}{\code{numeric}, parameter in backtracking line search.}
+  \item{maxreliter}{\code{integer}, maximum count of relaxed iterations.}
   \item{trace}{\code{logical}, if \code{TRUE} (the default), the
     solver's progress during the iterations is shown.}
   \item{method}{\code{"character"}, the method for solving the KKT-system.}

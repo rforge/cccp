@@ -33,6 +33,8 @@ or more conveniently by invoking \code{ctrl()}.
       backtracking line search.}
     \item{\code{beta}:}{Object of class \code{"numeric"}: Parameter in
       backtracking line search.}
+    \item{\code{maxreliter}:}{Object of class \code{"integer"}:
+      Parameter in backtracking line search.}
     \item{\code{trace}:}{Object of class \code{"logical"}: \code{TRUE}
       if solver's progress should be returned during iterations,
       otherwise \code{FALSE}.}

@@ -1,5 +1,6 @@
 \name{kktRES}
 \alias{kktRES}
+\alias{kktRES,DEFCP,PDV,PDV-method}
 \alias{kktRES,DEFNL,PDV,PDV-method}
 \alias{kktRES,DEFLP,PDV,PDV-method}
 \alias{kktRES,DEFQP,PDV,PDV-method}
@@ -13,6 +14,7 @@
 }
 
 \usage{
+\S4method{kktRES}{DEFCP,PDV,PDV}(cpd, u, v, W, sdv)  
 \S4method{kktRES}{DEFNL,PDV,PDV}(cpd, u, v, W, sdv)  
 \S4method{kktRES}{DEFLP,PDV,PDV}(cpd, u, v, W, sdv)  
 \S4method{kktRES}{DEFQP,PDV,PDV}(cpd, u, v, W)  

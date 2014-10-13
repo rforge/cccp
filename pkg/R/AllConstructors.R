@@ -1,8 +1,8 @@
 ##
 ## Function for creating 'CTRL' objects 
 ctrl <- function(maxiters = 100L, abstol = 1e-7, reltol = 1e-6, feastol = 1e-7,
-                 refine = FALSE, stepadj = 0.95, alpha = 0.01, beta = 0.5, trace = TRUE,
-                 method = c("solve")){
+                 refine = FALSE, stepadj = 0.95, alpha = 0.01, beta = 0.5, maxreliter = 8L,
+                 trace = TRUE, method = c("solve")){
     method <- match.arg(method)
     new("CTRL",
         maxiters = as.integer(maxiters),
@@ -13,6 +13,7 @@ ctrl <- function(maxiters = 100L, abstol = 1e-7, reltol = 1e-6, feastol = 1e-7,
         stepadj = stepadj,
         alpha = alpha,
         beta = beta,
+        maxreliter = maxreliter,
         trace = trace,
         method = method)
 }

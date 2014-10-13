@@ -13,3 +13,8 @@ setMethod("rprim", signature = c("PDV", "DEFQP"), function(pdv, cpd){
 setMethod("rprim", signature = c("PDV", "DEFNL"), function(pdv, cpd){
     drop(cpd@b - cpd@A %*% pdv@x)
 })
+##
+## Primal residuals for CPs with nonlinear/cone inequality and equality constraints
+setMethod("rprim", signature = c("PDV", "DEFCP"), function(pdv, cpd){
+    drop(cpd@b - cpd@A %*% pdv@x)
+})

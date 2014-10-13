@@ -32,3 +32,17 @@ setMethod("dobj", signature = c("PDV", "DEFNL"), function(pdv, cpd){
     term3 <- crossprod(pdv@y, cpd@A %*% pdv@x - cpd@b)
     drop(term1 + term2 + term3)
 })
+##
+## Methods for value of dual objective at point 'x' 'y' of 'DEFCP'
+setMethod("dobj", signature = c("PDV", "DEFCP"), function(pdv, cpd){
+    term1 <- pobj(pdv, cpd)
+    term2 <- 0
+    if(cpd@k > 1){
+        term2 <- Reduce("+", lapply(2:cpd@k, function(j){
+            crossprod(pdv@z[[j]]@u, cpd@cList[[j]]@G %*% pdv@x - cpd@cList[[j]]@h@u)
+        }))
+    }
+    term2 <- term2 + crossprod(pdv@z[[1]]@u, cpd@cList[[1]]@h@u)
+    term3 <- crossprod(pdv@y, cpd@A %*% pdv@x - cpd@b)
+    drop(term1 + term2 + term3)
+})

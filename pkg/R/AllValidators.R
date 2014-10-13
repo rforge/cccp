@@ -7,6 +7,9 @@ validCTRL <- function(object){
     if(object@maxiters < 1){
         return("\nThe count of maximal iterations must be positive and greater or equal to one.\n")
     }
+    if(object@maxreliter < 0){
+        return("\nThe count of maximum relative iterations must be greater or equal than zero.\n")
+    }
     if(!is.null(dim(object@abstol)) | length(object@abstol) > 1){
         return("\nThe absolute tolerance for convergence must be a real scalar.\n")
     }

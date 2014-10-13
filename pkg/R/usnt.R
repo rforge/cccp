@@ -35,17 +35,26 @@ setMethod("usnt", signature = c("Matrix", "SOCS"), function(u, W, trans = FALSE,
 setMethod("usnt", signature = c("Matrix", "PSDS"), function(u, W, trans = FALSE, inv = FALSE){
     if(inv){
         w <- W@W[["rti"]]
-        trans <- !trans
+        tt <- trans
     } else {
         w <- W@W[["r"]]
+        if(trans == FALSE){
+            tt <- TRUE
+        } else {
+            tt <- FALSE
+        }
     }
     m <- ncol(w)
     for(j in 1:ncol(u)){
         U <- Matrix(u[, j], nrow = m, ncol = m)
-        if(trans){
-            ans <- w %*% tcrossprod(U, w)
+        diag(U) <- 0.5 * diag(U)
+        U[upper.tri(U)] <- 0
+        if(tt){
+            a <- U %*% w
+            ans <- crossprod(w, a) + crossprod(a, w)
         } else {
-            ans <- crossprod(w, U) %*% w
+            a <- w %*% U
+            ans <- tcrossprod(w, a) + tcrossprod(a, w)
         }
         dim(ans) <- c(m^2, 1)
         u[, j] <- ans

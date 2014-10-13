@@ -1016,7 +1016,7 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                         gap <- gap0
                         step <- step0
                         W <- W0
-                        CurPdv <- CurdPdv0
+                        CurPdv <- CurPdv0
                         SolKkt <- SolKkt0
                         dsu <- dsu0
                         dzu <- dzu0
@@ -1088,6 +1088,470 @@ setMethod("cps", signature = "DEFNL", function(cpd){
     ## Preparing CPS-object for non-convergence  
     
     CurSol@x <- CurPdv@x
+    CurSol@y <- CurPdv@y
+    CurSol@s <- CurPdv@s
+    CurSol@z <- CurPdv@z
+    ts <- max(unlist(lapply(CurSol@s, function(s) umss(s))))
+    tz <- max(unlist(lapply(CurSol@z, function(z) umss(z))))
+    CurSol@pobj <- pcost
+    CurSol@dobj <- dcost
+    CurSol@dgap <- gap
+    if(!is.null(rgap)) CurSol@rdgap <- rgap
+    CurSol@certp <- pres
+    CurSol@certd <- dres
+    CurSol@pslack <- -ts
+    CurSol@dslack <- -tz
+    CurSol@niter <- i
+    CurSol@status <- "unknown"
+    if(ctrl@trace){
+        cat(paste("\n\n** Optimal solution could not be determined in", ctrl@maxiters, "iterations. **\n"))
+    }
+    return(CurSol)       
+})
+## 
+## cps-method for 'DEFCP'
+setMethod("cps", signature = "DEFCP", function(cpd){
+    ## setting constants 
+    ctrl <- cpd@ctrl
+    MaxRelaxedIters <- ctrl@maxreliter
+    RelaxedIters <- 0L
+    n <- cpd@n
+    ne <- n + 1L
+    ## Extending CP to epigraph-form
+    ## additional variable 't' is right-added to objective/constraints
+    ## linear objective
+    if(cpd@k > 0){
+        cpd@cList <- lapply(cpd@cList, function(cc){
+            cc@G <- cbind2(cc@G, 0)
+            cc
+        })
+    }
+    ## including objective to other nonlinear constraints, if applicable
+    cpd@nlfList <- c(cpd@f0, cpd@nlfList)
+    mnl <- cpd@mnl <- cpd@mnl + 1L
+    ## creating NLFV and NLFC objects, if mnl == 0
+    f0Val <- cpd@f0(cpd@x0)
+    if(mnl < 2){
+        h <- new("NLFV", u = Matrix(f0Val, nrow = 1L, ncol = 1L), dims = 1L)
+        nlfc <- new("NLFC",
+                G = Matrix(0, nrow = mnl, ncol = ne),
+                h = h,
+                dims = mnl,
+                vclass = "NLFV")
+        cpd@cList <- c(nlfc, cpd@cList)
+    } else {
+        ## adding f0 as first row to existing NLFC
+        cpd@cList[[1]]@G <- cbind2(cpd@cList[[1]]@G, 0)
+        cpd@cList[[1]]@G <- rbind2(0, cpd@cList[[1]]@G)
+        cpd@cList[[1]]@h@u <- rbind2(f0Val, cpd@cList[[1]]@h@u)
+        cpd@cList[[1]]@h@dims <- mnl
+    }
+    cpd@cList[[1]]@G[1, ne] <- -1
+    ## including nlfc to constraint list and adjusting 'k'
+    cpd@k <- length(cpd@cList)
+    cpd@k
+    m <- sum(unlist(lapply(cpd@cList, function(cc) cc@dims)))    
+    ## Amending LHS of equality constraints, if applicable
+    if(dim(cpd@A)[1] == 0){
+        cpd@A <- Matrix(0, nrow = 0, ncol = ne)
+    } else {
+        cpd@A <- cbind2(cpd@A, 0)
+    }
+    ## Creating KKTSLV-object for solving KKT-system for convex programs with nonlinear objective    
+    kktSLV <- kktCP(cpd)
+    idx <- 1:cpd@k
+    cc <- lapply(cpd@cList, function(cc) cc@vclass)
+    idxNSC <- integer(0)
+    idxPSD <- which("PSDV" == cc)
+    if(length(idxPSD) < 1){
+        idxNSC <- idx
+    } else {
+        idxNSC <- idx[-idxPSD]
+    }
+    idxNSC
+    idxPSD
+    cvgdvals <- rep(NA, 5)
+    names(cvgdvals) <- c("pobj", "dobj", "pinf", "dinf", "gap")
+    CurSol <- new("CPS")
+    CurPdv <- NewPdv <- DeltaPdv <- new("PDV")
+    CurPdv@x <- c(cpd@x0, 0.0)
+    CurPdv@y <- rep(0, nrow(cpd@A))
+    CurPdv@s <- CurPdv@z <- lapply(cpd@cList, initp)
+    CurPdv@x
+    ##
+    ## Start iterations
+    ##
+    RelaxedIters <- 0L
+    for(i in 0:(ctrl@maxiters + 1)){
+        
+        ## Setting Df to 'G' slot of NLFC
+        cpd@cList[[1]]@G[, -ne] <- Matrix(do.call("rbind", lapply(cpd@nlfList, function(nlf){
+            grad(func = nlf, x = CurPdv@x[-ne])
+        })))
+        cpd@cList[[1]]@G
+        ## Setting f to 'h' slot of NLFC
+        cpd@cList[[1]]@h@u <- Matrix(unlist(lapply(
+            cpd@nlfList, function(nlf) nlf(CurPdv@x[-ne]))),
+                                     nrow = mnl, ncol = 1)
+        cpd@cList[[1]]@h@u[1, 1] <- cpd@cList[[1]]@h@u[1, 1] - CurPdv@x[ne]
+        ## Computing Hessian and setting to cpd@H
+        if(mnl > 1){
+            cpd@H <- Reduce("+", lapply(2:mnl, function(j){
+                Matrix(CurPdv@z[[1]]@u[j, 1] * hessian(func = cpd@nlfList[[j]], x = CurPdv@x[-ne]))
+            }))
+        }
+        ## Computing gap
+        gap <- sum(sapply(idx, function(j) udot(CurPdv@s[[j]], CurPdv@z[[j]])))
+        ## Computing residuals
+        ## Dual Residuals
+        rx <- rdual(CurPdv, cpd)
+        resx <- sqrt(udot(rx))
+        ## Primal Residuals
+        ry <- rprim(CurPdv, cpd)
+        resy <- sqrt(udot(ry))
+        ## Central Residuals
+        rz <- rcent(CurPdv, cpd)
+        resznl <- unrm2(rz[[1]])
+        resz <- sum(unlist(lapply(rz, function(cc) unrm2(cc))))
+        ## Statistics for stopping criteria
+        pcost <- pobj(CurPdv, cpd)
+        dcost <- pcost + udot(CurPdv@y, ry) + sum(unlist(lapply(idx, function(j)
+                                                                udot(CurPdv@z[[j]], rz[[j]])))) - gap
+        rgap <- NULL
+        if(pcost < 0.0) rgap <- gap / -pcost
+        if(dcost > 0.0) rgap <- gap / dcost
+        pres <- sqrt(resy^2 + resz^2)
+        dres <- resx
+        if(i == 0){
+            resx0 <- max(1.0, resx)
+            resznl0 <- max(1.0, resznl)
+            pres0 <- max(1.0, pres)
+            dres0 <- max(1.0, dres)
+            gap0 <- gap
+            theta1 <- 1.0 / gap0
+            theta2 <- 1.0 / resx0
+            theta3 <- 1.0 / resznl0
+        }
+        phi <- theta1 * gap + theta2 * resx + theta3 * resznl
+        pres <- pres / pres0
+        dres <- dres / dres0
+
+        ## tracing status quo of IPM
+        if(ctrl@trace){
+            cat(paste("Iteration:", i, "\n"))
+            cvgdvals[1:5] <- signif(c(pcost,
+                                      dcost,
+                                      pres,
+                                      dres,
+                                      gap))
+            print(cvgdvals)
+        }
+        ## Checking convergence
+        checkRgap <- if(!is.null(rgap)){
+            rgap <= ctrl@reltol
+        } else {
+            FALSE
+        }
+        if((pres <= ctrl@feastol) & (dres <= ctrl@feastol) &
+           (gap <= ctrl@abstol || checkRgap)){
+            CurSol@x <- CurPdv@x 
+            CurSol@y <- CurPdv@y
+            CurSol@s <- CurPdv@s
+            CurSol@z <- CurPdv@z
+            ts <- max(unlist(lapply(CurSol@s, function(s) umss(s))))
+            tz <- max(unlist(lapply(CurSol@z, function(z) umss(z))))
+            CurSol@pobj <- pcost
+            CurSol@dobj <- dcost
+            CurSol@dgap <- gap
+            if(!is.null(rgap)) CurSol@rdgap <- rgap
+            CurSol@certp <- pres
+            CurSol@certd <- dres
+            CurSol@pslack <- -ts
+            CurSol@dslack <- -tz
+            CurSol@niter <- i
+            CurSol@status <- "optimal"
+            if(ctrl@trace) cat("Optimal solution found.\n")
+            return(CurSol)
+        }
+        ##
+        ## Compute initial scalings
+        ##
+        if(i == 0){
+            W <- sapply(idx, function(j) ntsc(CurPdv@s[[j]], CurPdv@z[[j]]))
+        }
+        lambdasq <- lapply(idx, function(j) uprd(W[[j]]@W[["lambda"]]))
+        sigma <- eta <- 0.0
+        kktslv <- kktSLV(W, cpd)
+        ##
+        ## Solving for affine and combined direction in two-round for-loop
+        ##
+        for(ii in 0:1){
+            mu <- gap / m
+            DeltaPdv@s <- lapply(idx, function(j){
+                s <- lambdasq[[j]]
+                s@u <- -lambdasq[[j]]@u + uone(CurPdv@s[[j]])@u * sigma * mu
+                s
+            })
+            DeltaPdv@x <- -(1 - eta) * rx
+            DeltaPdv@y <- -(1 - eta) * ry
+            DeltaPdv@z <- lapply(rz, function(z){
+                z@u <- -(1 - eta) * z@u
+                z
+            })
+            DeltaPdv
+            
+            DeltaPdv <- try(kktSOL(cpd, DeltaPdv, W, kktslv, refine = ctrl@refine))
+
+            if(class(DeltaPdv) == "try-error"){
+                CurSol@x <- CurPdv@x
+                CurSol@y <- CurPdv@y
+                CurSol@s <- CurPdv@s
+                CurSol@z <- CurPdv@z
+                ts <- max(unlist(lapply(CurSol@s, function(s) umss(s))))
+                tz <- max(unlist(lapply(CurSol@z, function(z) umss(z))))
+                CurSol@pobj <- pcost
+                CurSol@dobj <- dcost
+                CurSol@dgap <- gap
+                if(!is.null(rgap)) CurSol@rdgap <- rgap
+                CurSol@certp <- pres
+                CurSol@certd <- dres
+                CurSol@pslack <- -ts
+                CurSol@dslack <- -tz
+                CurSol@niter <- i
+                CurSol@status <- "unknown"
+                if(ctrl@trace) cat("Terminated (singular KKT matrix).\n")
+                return(CurSol)
+            }
+            
+            ## Inner product ds'*dz and unscaled steps used in line search.
+            dsdz <- sum(unlist(lapply(idx, function(j) udot(DeltaPdv@s[[j]], DeltaPdv@z[[j]]))))
+            ## unscaling slack-variables
+            ds2 <- lapply(idx, function(j) usnt(DeltaPdv@s[[j]]@u, W[[j]], inv = FALSE, trans = TRUE))
+            dz2 <- lapply(idx, function(j) usnt(DeltaPdv@z[[j]]@u, W[[j]], inv = TRUE, trans = FALSE))
+            ## Maximum step to boundary
+            DeltaPdv@s <- lapply(idx, function(j) uslb(u = DeltaPdv@s[[j]], lambda = W[[j]]@W[["lambda"]]))
+            DeltaPdv@z <- lapply(idx, function(j) uslb(u = DeltaPdv@z[[j]], lambda = W[[j]]@W[["lambda"]]))
+
+            MaxStepS <- lapply(DeltaPdv@s, umss)
+            MaxStepZ <- lapply(DeltaPdv@z, umss)
+
+            for(j in idxPSD){
+                Qs <- MaxStepS[[j]]$evd$vectors
+                dim(Qs) <- c(DeltaPdv@s[[j]]@dims^2, 1)
+                DeltaPdv@s[[j]]@u <- Matrix(Qs)
+                Qz <- MaxStepZ[[j]]$evd$vectors
+                dim(Qz) <- c(DeltaPdv@z[[j]]@dims^2, 1)
+                DeltaPdv@z[[j]]@u <- Matrix(Qz)
+            }          
+
+            ts <- max(unlist(lapply(MaxStepS, function(x) x$ms)))
+            tz <- max(unlist(lapply(MaxStepZ, function(x) x$ms)))
+            tm <- max(c(0, ts, tz))
+
+            if(tm == 0.0){
+                step <- 1.0
+            } else {
+                step <- min(1.0, ctrl@stepadj / tm)
+            }
+
+            ## Backtracking until x is in the domain of f
+            backtrack <- TRUE
+            while(backtrack){
+                x <- CurPdv@x + step * DeltaPdv@x
+                Fval <- unlist(lapply(cpd@nlfList, function(f) f(x[-ne])))
+                Fval[1] <- Fval[1] - x[ne]
+                if(any(is.nan(Fval))){
+                    newFval <- NULL
+                } else {
+                    ##cpd@cList[[1]]@h@u <- Matrix(Fval, nrow = mnl, ncol = 1)
+                    ##cpd@cList[[1]]@G[, -ne] <- Matrix(do.call("rbind", lapply(cpd@nlfList, grad, x = x[-ne])))
+                    ##CurPdv@x <- x
+                    backtrack = FALSE
+                }
+                step <- step * ctrl@beta
+            }
+
+            ## Merit function
+            phi <- theta1 * gap + theta2 * resx + theta3 * resznl
+            if(ii == 0){
+                dphi <- -phi
+            } else {
+                dphi <- -theta1 * (1 - sigma) * gap - theta2 * (1 - eta) * resx - theta3 * (1 - eta) * resznl
+            }
+
+            ## Line search
+            backtrack = TRUE
+            ##cmnl <- cpd@cList[[1]]
+            while(backtrack){
+                NewPdv <- CurPdv
+                NewPdv@x <- NewPdv@x + step * DeltaPdv@x
+                NewPdv@y <- NewPdv@y + step * DeltaPdv@y
+                NewPdv@z <- lapply(idx, function(j){
+                    ans <- dz2[[j]]
+                    ans@u <- NewPdv@z[[j]]@u + step * dz2[[j]]@u
+                    ans
+                })
+                NewPdv@s <- lapply(idx, function(j){
+                    ans <- ds2[[j]]
+                    ans@u <- CurPdv@s[[j]]@u + step * ds2[[j]]@u
+                    ans
+                })
+
+                cpd@cList[[1]]@h@u <- Matrix(unlist(lapply(cpd@nlfList, function(f){
+                    f(NewPdv@x[-ne])})), ncol = 1) 
+                cpd@cList[[1]]@h@u[1, 1] <- cpd@cList[[1]]@h@u[1, 1] - NewPdv@x[ne] ## newf
+                cpd@cList[[1]]@G[, -ne] <- Matrix(do.call("rbind", lapply(
+                    cpd@nlfList, grad, x = NewPdv@x[-ne]))) ## newDf
+                ## Residuals
+                ## Dual Residuals
+                newrx <- rdual(NewPdv, cpd)
+                newresx <- sqrt(udot(newrx))
+                ## Central Residuals of nonlinear constraints
+                newrznl <- drop(NewPdv@s[[1]]@u + cpd@cList[[1]]@h@u)
+                newresznl <- unrm2(newrznl)
+
+                newgap <- (1.0 - (1.0 - sigma) * step) * gap + step^2 * dsdz
+                newphi <- theta1 * newgap + theta2 * newresx + theta3 * newresznl
+
+                if(ii == 0){
+                    check1 <- newgap <= (1.0 - ctrl@alpha * step) * gap
+                    check2 <- (RelaxedIters >= 0) && (RelaxedIters < MaxRelaxedIters)
+                    check3 <- newphi <= phi + ctrl@alpha * step * dphi
+                    if(check1 && (check2 || check3)){
+                        backtrack = FALSE
+                        sigma <- min(newgap / gap, (newgap / gap)^3)
+                        eta <- 0.0
+                    } else {
+                        step <- step * ctrl@beta
+                    }
+                } else {
+                    if(RelaxedIters == -1L || ((RelaxedIters == 0L) && (MaxRelaxedIters == 0L))){
+                        ## Do a standard line search
+                        check3 <- newphi <= phi + ctrl@alpha * step * dphi
+                        if(check3) {
+                            RelaxedIters <- 0L
+                            backtrack <- FALSE
+                        } else {
+                            step <- step * ctrl@beta
+                        }
+                    } else if(RelaxedIters == 0 && (RelaxedIters < MaxRelaxedIters)){
+                        check3 <- newphi <= phi + ctrl@alpha * step * dphi
+                        if(check3){
+                            ## Relaxed line serach gives sufficient decreaase
+                            RelaxedIters <- 0L
+                        } else {
+                            ## save state
+                            cmnl <- cpd@cList[[1]]
+                            phi0 <- phi
+                            dphi0 <- dphi
+                            gap0 <- gap
+                            step0 <- step
+                            W0 <- W
+                            CurPdv0 <- CurPdv
+                            DeltaPdv0 <- DeltaPdv
+                            ds20 <- ds2
+                            dz20 <- dz2
+                            lambdasq0 <- lambdasq
+                            dsdz0 <- dsdz
+                            sigma0 <- sigma
+                            eta0 <- eta
+                            rx0 <- rx
+                            ry0 <- ry
+                            rz0 <- rz
+                            RelaxedIters <- 1L
+                        }
+                    backtrack <- FALSE
+                } else if((RelaxedIters >= 0L) && (RelaxedIters < MaxRelaxedIters) && (MaxRelaxedIters > 0L)){
+                    if(newphi <= phi0 + ctrl@alpha * step0 * dphi0){
+                        ## Relaxed line search gives sufficient decrease
+                        RelaxedIters <- 0L
+                    } else {
+                        ## Relaxed line search
+                        RelaxedIters <- RelaxedIters + 1L
+                    }
+                    backtrack <- FALSE
+                } else if(RelaxedIters == MaxRelaxedIters && (MaxRelaxedIters > 0)){
+                    if(newphi <= phi0 + ctrl@alpha * step0 * dphi0){
+                        ## Series of relaxed line searches ends with
+                        ## sufficient decrease w.r.t. phi0
+                        backtrack <- FALSE
+                        RelaxedIters <- 0L
+                    } else if(newphi >= phi0){
+                        ## Resume last saved line search
+                        cpd@cList[[1]] <- cmnl
+                        phi <- phi0
+                        dphi <- dphi0
+                        gap <- gap0
+                        step <- step0
+                        W <- W0
+                        CurPdv <- CurPdv0
+                        DeltaPdv <- DeltaPdv0
+                        ds2 <- ds20
+                        dz2 <- dz20
+                        lambdasq <- lambdasq0            
+                        dsdz <- dsdz0
+                        sigma <- sigma0
+                        eta <- eta0
+                        RelaxedIters <- -1L
+                    } else if(newphi <= phi + ctrl@alpha * step * dphi)
+                        ## Series of relaxed line seraches ends with
+                        ## insufficient decrease w.r.t. phi0
+                        backtrack <- FALSE
+                        RelaxedIters <- -1L
+                    }
+                }
+            }
+        }
+        ##cpd@cList[[1]] <- cmnl
+        ##
+        ## Updating x, y; s and z (in current scaling)
+        ##
+        CurPdv@x <- CurPdv@x + step * DeltaPdv@x
+        CurPdv@y <- CurPdv@y + step * DeltaPdv@y    
+      
+        if(length(idxNSC) > 0){
+            for(j in idxNSC){
+                DeltaPdv@s[[j]] <- umsa(DeltaPdv@s[[j]], alpha = step, init = FALSE)
+                DeltaPdv@z[[j]] <- umsa(DeltaPdv@z[[j]], alpha = step, init = FALSE)
+                DeltaPdv@s[[j]] <- uslb(u = DeltaPdv@s[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)
+                DeltaPdv@z[[j]] <- uslb(u = DeltaPdv@z[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)
+            }
+        }
+
+        if(length(idxPSD) > 0){
+            for(j in idxPSD){
+                sigs <- MaxStepS[[j]]$evd$values
+                sigz <- MaxStepZ[[j]]$evd$values
+
+                DeltaPdv@s[[j]] <- uslb(u = DeltaPdv@s[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)
+                DeltaPdv@z[[j]] <- uslb(u = DeltaPdv@z[[j]], lambda = W[[j]]@W[["lambda"]], inv = TRUE)
+
+                DeltaPdv@s[[j]] <- umsa(DeltaPdv@s[[j]], alpha = step, init = FALSE, sigma = sigs, lambda = W[[j]]@W[["lambda"]])
+                DeltaPdv@z[[j]] <- umsa(DeltaPdv@z[[j]], alpha = step, init = FALSE, sigma = sigz, lambda = W[[j]]@W[["lambda"]])                
+            }
+        }
+        ##
+        ## updating lambda and scaling
+        ##
+        W <- lapply(idx, function(j){
+            ntsu(W = W[[j]], s = DeltaPdv@s[[j]], z =  DeltaPdv@z[[j]])
+        })
+    
+        CurPdv@s <- lapply(idx, function(j){
+            usnt(W[[j]]@W[["lambda"]]@u, W[[j]], inv = FALSE, trans = TRUE)
+        })
+
+        CurPdv@z <- lapply(idx, function(j){
+            usnt(W[[j]]@W[["lambda"]]@u, W[[j]], inv = TRUE, trans = FALSE)
+        })
+
+        gap <- sum(unlist(lapply(idx, function(j) udot(W[[j]]@W[["lambda"]], W[[j]]@W[["lambda"]]))))
+    }
+           
+    
+    ## Preparing CPS-object for non-convergence  
+    
+    CurSol@x <- CurPdv@x[-ne]
     CurSol@y <- CurPdv@y
     CurSol@s <- CurPdv@s
     CurSol@z <- CurPdv@z

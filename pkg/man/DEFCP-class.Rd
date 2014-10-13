@@ -16,6 +16,9 @@ Objects can be created by calls of the form \code{new("DEFCP",
 
 \section{Slots}{
   \describe{
+    \item{\code{q}:}{Object of class \code{"vector"}: A \eqn{(n \times
+	1)} vector of the linear objective (epigraph form of convex
+      problem).}
     \item{\code{x0}:}{Object of class \code{"vector"}: A \eqn{(n \times
 	1)} vector of initial values. This point must be in the domaine
       of the non-linear constraints.}
