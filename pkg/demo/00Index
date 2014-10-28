@@ -1,4 +1,5 @@
 ACNT	Analytic center with equality constraints
+CPN	Solving a convex (nonlinear) program with SOC and PSD constraints
 FPLN	Floor Planning: linear objective with non-linear constraints
 LPIC	Solving Linear Program with linear inequality constraints
 LPNC	Solving Linear Program with nonlinear inequality constraints

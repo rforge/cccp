@@ -1,6 +1,5 @@
 \name{rcent}
 \alias{rcent}
-\alias{rcent,PDV,DEFCP-method}
 \alias{rcent,PDV,DEFNL-method}
 \alias{rcent,PDV,DEFLP-method}
 \alias{rcent,PDV,DEFQP-method}
@@ -14,7 +13,6 @@
 }
 
 \usage{
-\S4method{rcent}{PDV,DEFCP}(pdv, cpd)  
 \S4method{rcent}{PDV,DEFNL}(pdv, cpd)  
 \S4method{rcent}{PDV,DEFLP}(pdv, cpd)  
 \S4method{rcent}{PDV,DEFQP}(pdv, cpd)  

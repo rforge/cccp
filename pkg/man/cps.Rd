@@ -1,6 +1,5 @@
 \name{cps}
 \alias{cps}
-\alias{cps,DEFCP-method}
 \alias{cps,DEFNL-method}
 \alias{cps,DEFLP-method}
 \alias{cps,DEFQP-method}
@@ -15,7 +14,6 @@
 }
 
 \usage{
-\S4method{cps}{DEFCP}(cpd)  
 \S4method{cps}{DEFNL}(cpd)  
 \S4method{cps}{DEFLP}(cpd)  
 \S4method{cps}{DEFQP}(cpd)  

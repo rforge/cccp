@@ -75,7 +75,6 @@ export(
     "cpl",
     "cpn",
     "ctrl",
-    "kktCP",
     "kktSOLVE",
     "l1",
     "nlfc",

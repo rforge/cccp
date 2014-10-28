@@ -103,36 +103,3 @@ setMethod("kktRES", signature = c("DEFNL", "PDV", "PDV"), function(cpd, u, v, W,
     })                   
     return(v)  
 })
-##
-## Method for determining residuals of a KKT-system for convex programs with nonlinear constraints
-setMethod("kktRES", signature = c("DEFCP", "PDV", "PDV"), function(cpd, u, v, W, sdv){
-    idx <- 1:cpd@k
-    ## dual residual
-    ## v@x := v@x - H * ux - A'*u@y - G' * W^{-1} * u@z
-    Hx <- drop(crossprod(cpd@H, u@x))
-    Ay <- drop(crossprod(cpd@A, u@y))
-    Winvz <- lapply(idx, function(j) usnt(u@z[[j]]@u, W[[j]], inv = TRUE, trans = FALSE))
-    GWinvz <- Reduce("+", lapply(idx, function(j) drop(crossprod(cpd@cList[[j]]@G, Winvz[[j]]@u))))
-    v@x <- v@x - Hx - Ay - GWinvz
-    ## primal residual
-    ## v@y := v@y - A * u@x 
-    v@y <- v@y - drop(cpd@A %*% u@x)
-    ## centrality residual (dual)
-    ## v@z := v@z - G * u@x - W'u@s
-    Wts <- lapply(idx, function(j) usnt(u@s[[j]]@u, W[[j]], inv = FALSE, trans = TRUE))
-    v@z <- lapply(idx, function(j){
-        vz <- v@z[[j]]
-        vz@u <- vz@u - drop(cpd@cList[[j]]@G %*% u@x) - Wts[[j]]@u
-        vz
-    })
-    ## centrality residual (primal)
-    ## v@s := v@s - lambda o (u@z + u@s)
-    v@s <- lapply(idx, function(j){
-        zs <- u@s[[j]]
-        zs@u <- zs@u + u@z[[j]]@u
-        lzs <- uprd(W[[j]]@W[["lambda"]], zs)
-        lzs@u <- v@s[[j]]@u - lzs@u
-        lzs
-    })                   
-    return(v)  
-})

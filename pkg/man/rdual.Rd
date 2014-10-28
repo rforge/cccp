@@ -1,6 +1,5 @@
 \name{rdual}
 \alias{rdual}
-\alias{rdual,PDV,DEFCP-method}
 \alias{rdual,PDV,DEFNL-method}
 \alias{rdual,PDV,DEFLP-method}
 \alias{rdual,PDV,DEFQP-method}
@@ -16,7 +15,6 @@
 }
 
 \usage{
-\S4method{rdual}{PDV,DEFCP}(pdv, cpd)  
 \S4method{rdual}{PDV,DEFNL}(pdv, cpd)  
 \S4method{rdual}{PDV,DEFLP}(pdv, cpd)  
 \S4method{rdual}{PDV,DEFQP}(pdv, cpd)  

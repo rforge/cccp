@@ -1,6 +1,5 @@
 \name{dobj}
 \alias{dobj}
-\alias{dobj,PDV,DEFCP-method}
 \alias{dobj,PDV,DEFNL-method}
 \alias{dobj,PDV,DEFLP-method}
 \alias{dobj,PDV,DEFQP-method}
@@ -15,7 +14,6 @@
 }
 
 \usage{
-\S4method{dobj}{PDV,DEFCP}(pdv, cpd)  
 \S4method{dobj}{PDV,DEFNL}(pdv, cpd)  
 \S4method{dobj}{PDV,DEFLP}(pdv, cpd)  
 \S4method{dobj}{PDV,DEFQP}(pdv, cpd)  

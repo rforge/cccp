@@ -25,8 +25,15 @@ setMethod("udot", signature = c("SOCV", "missing"), function(u, v){
 ##
 ## inner-product between points in PSD cones
 setMethod("udot", signature = c("PSDV", "PSDV"), function(u, v){
-    drop(sum(u@u * v@u))
+    u <- matrix(u@u, u@dims, u@dims)
+    v <- matrix(v@u, v@dims, v@dims)
+    a1 <- crossprod(diag(u), diag(v))
+    a2 <- 2 * crossprod(u[lower.tri(u)], v[lower.tri(v)])
+    drop(a1 + a2)
 })
 setMethod("udot", signature = c("PSDV", "missing"), function(u, v){
-    drop(sum(u@u^2))
+    u <- matrix(u@u, u@dims, u@dims)
+    a1 <- crossprod(diag(u))
+    a2 <- 2 * crossprod(u[lower.tri(u)])
+    drop(a1 + a2)
 })
