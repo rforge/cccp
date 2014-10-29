@@ -8,4 +8,6 @@ Depends: R (>= 3.0.1), methods, Matrix, numDeriv
 Suggests: RUnit
 LazyLoad: yes
 Description: This package contains routines for solving convex optimization problems with cone constraints by means of interior-point methods. The implemented routines are adopted from the cvxopt-software. 
+Imports: Rcpp (>= 0.11.2), RcppArmadillo (>= 0.4.320.0)
+LinkingTo: Rcpp, RcppArmadillo
 License: GPL (>= 3)
