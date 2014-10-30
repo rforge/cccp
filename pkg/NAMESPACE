@@ -85,5 +85,8 @@ export(
     "psdc",
     "socc",
     ## C++ functions
-    ".sdot_nls"
+    ".sdot_nls",
+    ".sdot_p",
+    ".snrm2_nls",
+    ".snrm2_p"
     )

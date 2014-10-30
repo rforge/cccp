@@ -22,3 +22,51 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// sdot_p
+double sdot_p(const arma::colvec& u, const arma::colvec& v, const int& m);
+RcppExport SEXP cccp_sdot_p(SEXP uSEXP, SEXP vSEXP, SEXP mSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::colvec& >::type u(uSEXP );
+        Rcpp::traits::input_parameter< const arma::colvec& >::type v(vSEXP );
+        Rcpp::traits::input_parameter< const int& >::type m(mSEXP );
+        double __result = sdot_p(u, v, m);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// snrm2_nls
+double snrm2_nls(const arma::colvec& u);
+RcppExport SEXP cccp_snrm2_nls(SEXP uSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::colvec& >::type u(uSEXP );
+        double __result = snrm2_nls(u);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// snrm2_p
+double snrm2_p(const arma::colvec& u, const int& m);
+RcppExport SEXP cccp_snrm2_p(SEXP uSEXP, SEXP mSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::colvec& >::type u(uSEXP );
+        Rcpp::traits::input_parameter< const int& >::type m(mSEXP );
+        double __result = snrm2_p(u, m);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}

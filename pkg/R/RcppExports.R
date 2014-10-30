@@ -5,3 +5,15 @@
     .Call('cccp_sdot_nls', PACKAGE = 'cccp', u, v)
 }
 
+.sdot_p <- function(u, v, m) {
+    .Call('cccp_sdot_p', PACKAGE = 'cccp', u, v, m)
+}
+
+.snrm2_nls <- function(u) {
+    .Call('cccp_snrm2_nls', PACKAGE = 'cccp', u)
+}
+
+.snrm2_p <- function(u, m) {
+    .Call('cccp_snrm2_p', PACKAGE = 'cccp', u, m)
+}
+
