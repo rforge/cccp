@@ -7,21 +7,17 @@ cpd <- function(P, q, A = NULL, b = NULL, cList = list(), optctrl = ctrl()){
         n <- ncol(P)
     }
     if(is.null(A)){
-        A <- Matrix(0, nrow = 0, ncol = n)
+        A <- matrix(0, nrow = 0, ncol = n)
     } 
     if(is.null(dim(A))){
-        A <- Matrix(A, nrow = 1)
-    } else {
-        if(!any(extends(class(A)) %in% "Matrix"))  A <- as(A, "Matrix")
+        A <- matrix(A, nrow = 1)
     }
     if(is.null(b)){
-        b <- Matrix(0, nrow = 0, ncol = 1)
+        b <- matrix(0, nrow = 0, ncol = 1)
     }
     if(is.null(dim(b))){
-        b <- Matrix(b, ncol = 1)
-    } else {
-        if(!any(extends(class(A)) %in% "Matrix"))  b <- as(b, "Matrix")
-    }
+        b <- matrix(b, ncol = 1)
+    } 
     if(is.null(P)){
         if(k < 1){
             if(optctrl@trace){

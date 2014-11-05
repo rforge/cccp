@@ -15,8 +15,8 @@ setClass("CTRL", representation(maxiters = "integer",
                                 method = "character"))
 ## S4-class for linear program definition
 setClass("DEFLP", representation(q = "vector",
-                                 A = "Matrix",
-                                 b = "Matrix",
+                                 A = "matrix",
+                                 b = "matrix",
                                  cList = "list",
                                  n = "integer",
                                  k = "integer",
@@ -24,10 +24,10 @@ setClass("DEFLP", representation(q = "vector",
                                  title = "character"),
          prototype = list(title = "Linear Program"))
 ## S4-class for quadratic program definition
-setClass("DEFQP", representation(P = "Matrix",
+setClass("DEFQP", representation(P = "matrix",
                                  q = "vector",
-                                 A = "Matrix",
-                                 b = "Matrix",
+                                 A = "matrix",
+                                 b = "matrix",
                                  cList = "list",
                                  n = "integer",
                                  k = "integer",
@@ -39,13 +39,13 @@ setClass("DEFNL", representation(x0 = "vector",
                                  q = "vector",
                                  nlfList = "list",
                                  cList = "list",
-                                 A = "Matrix",
-                                 b = "Matrix",
+                                 A = "matrix",
+                                 b = "matrix",
                                  k = "integer",
                                  n = "integer",
                                  mnl = "integer",
                                  ctrl = "CTRL",
-                                 H = "Matrix",
+                                 H = "matrix",
                                  title = "character"),
          prototype = list(title = "Linear Program with non-linear constraints"))
 ## S4-class for convex program with non-linear constraints definition
@@ -54,13 +54,13 @@ setClass("DEFCP", representation(q = "vector",
                                  f0 = "function",
                                  nlfList = "list",
                                  cList = "list",
-                                 A = "Matrix",
-                                 b = "Matrix",
+                                 A = "matrix",
+                                 b = "matrix",
                                  k = "integer",
                                  n = "integer",
                                  mnl = "integer",
                                  ctrl = "CTRL",
-                                 H = "Matrix",
+                                 H = "matrix",
                                  title = "character"),
          prototype = list(title = "Convex Program with non-linear constraints"))
 ## S4-class union of convex programs
@@ -117,12 +117,12 @@ setClass("CPS", representation(pobj = "numeric",
 ##
 ## NNO-variable
 setClass("NNOV", representation(
-    u = "Matrix",
+    u = "matrix",
     dims = "integer")
          )
 ## NNO-constraint
 setClass("NNOC", representation(
-    G = "Matrix",
+    G = "matrix",
     h = "NNOV",
     dims = "integer",
     vclass = "character")
@@ -133,12 +133,12 @@ setClass("NNOS", representation(
          )
 ## SOC-variable
 setClass("SOCV", representation(
-    u = "Matrix",
+    u = "matrix",
     dims = "integer")
          )
 ## SOC-constraint
 setClass("SOCC", representation(
-    G = "Matrix",
+    G = "matrix",
     h = "SOCV",
     dims = "integer",
     vclass = "character")
@@ -149,12 +149,12 @@ setClass("SOCS", representation(
          )
 ## PSD-variable 
 setClass("PSDV", representation(
-    u = "Matrix",
+    u = "matrix",
     dims = "integer")
          )
 ## SOC-constraint
 setClass("PSDC", representation(
-    G = "Matrix",
+    G = "matrix",
     h = "PSDV",
     dims = "integer",
     vclass = "character")
@@ -165,12 +165,12 @@ setClass("PSDS", representation(
          )
 ## NLF-variable
 setClass("NLFV", representation(
-    u = "Matrix",
+    u = "matrix",
     dims = "integer")
          )
 ## NLF-constraint
 setClass("NLFC", representation(
-    G = "Matrix",
+    G = "matrix",
     h = "NLFV",
     dims = "integer",
     vclass = "character")

@@ -17,7 +17,7 @@ l1(P, q = NULL, optctrl = ctrl())
 }
 
 \arguments{
-  \item{P}{\code{Matrix} of dimension \eqn{m \times n}.}
+  \item{P}{\code{matrix} of dimension \eqn{m \times n}.}
   \item{q}{\code{vector} of length \eqn{m}.}
   \item{optctrl}{An object of S4-class \code{CTRL}.}
 

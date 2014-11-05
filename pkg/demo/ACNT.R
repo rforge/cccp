@@ -6,8 +6,8 @@ f0 <- function(x){
     -sum(log(x))
 }
 ## equality constraint
-A <- Matrix(c(1, 1, 2), nrow = 1)
-b <- Matrix(1, nrow = 1)
+A <- matrix(c(1, 1, 2), nrow = 1)
+b <- matrix(1, nrow = 1)
 ## initial (feasible!) point
 x0 = c(0.25, 0.25, 0.25)
 ## solving problem

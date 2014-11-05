@@ -33,9 +33,9 @@ Objects can be created by calls of the form \code{new("DEFCP",
       constraints (object of S4-class \code{NLFC}) and the remaining
       elements are the cone constraints, each of either S4-class
       \code{NNOC}, or \code{SOCC}, or \code{PSDC}, if applicable.}  
-    \item{\code{A}:}{Object of class \code{"Matrix"}: A \eqn{(p
+    \item{\code{A}:}{Object of class \code{"matrix"}: A \eqn{(p
 	\times n)} matrix of the equality constraints (lhs).}
-    \item{\code{b}:}{Object of class \code{"Matrix"}: A \eqn{(p
+    \item{\code{b}:}{Object of class \code{"matrix"}: A \eqn{(p
 	\times 1)} matrix of the equality constraints (rhs).}
     \item{\code{n}:}{Object of class \code{"integer"}: The count of
       variables in the objective function.}
@@ -46,7 +46,7 @@ Objects can be created by calls of the form \code{new("DEFCP",
       non-linear constraints.}
     \item{\code{ctrl}:}{Object of class \code{"CTRL"}: The control
       parameters used in the IP-algorithm.}
-    \item{\code{H}:}{Object of class \code{"Matrix"}: A \eqn{(n \times
+    \item{\code{H}:}{Object of class \code{"matrix"}: A \eqn{(n \times
 	n)} matrix containing the Hessian with respect to the nonlinear
       constraints.}
     \item{\code{title}:}{Object of class \code{"character"}: A brief

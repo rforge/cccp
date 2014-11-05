@@ -16,7 +16,7 @@ Objects can be created by calls of the form \code{new("NLFV",
 
 \section{Slots}{
   \describe{
-    \item{\code{u}:}{Object of class \code{"Matrix"}: A vector
+    \item{\code{u}:}{Object of class \code{"matrix"}: A vector
       representing a point with respect to the nonnegative orthant cone.}
     \item{\code{dims}:}{Object of class \code{"integer"}: The dimension
       of the cone, \emph{i.e.}, the length of \code{u}.}

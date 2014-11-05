@@ -5,7 +5,6 @@ useDynLib(cccp)
 import(RcppArmadillo)
 importFrom(Rcpp, evalCpp)
 import(methods)
-import(Matrix)
 import(numDeriv)
 ##
 ## Export of S4-classes
@@ -66,8 +65,7 @@ exportMethods(
     "uone",
     "uprd",
     "uslb",
-    "usnt",
-    "uvec"
+    "usnt"
     )
 ##
 ## Export of functions
@@ -83,10 +81,5 @@ export(
     "nlfc",
     "nnoc",
     "psdc",
-    "socc",
-    ## C++ functions
-    ".sdot_nls",
-    ".sdot_p",
-    ".snrm2_nls",
-    ".snrm2_p"
+    "socc"
     )

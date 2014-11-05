@@ -37,9 +37,9 @@ setAs("DEFCP", "DEFNL", function(from){
     } else {
         nlfeList <- list(f0e)
         mnl <- 1L
-        h <- new("NLFV", u = Matrix(0, nrow = mnl), dims = mnl)
+        h <- new("NLFV", u = matrix(0, nrow = mnl), dims = mnl)
         nlfc <- new("NLFC",
-                    G = Matrix(0, nrow = mnl, ncol = n),
+                    G = matrix(0, nrow = mnl, ncol = n),
                     h = h,
                     dims = mnl,
                     vclass = "NLFV")
@@ -48,7 +48,7 @@ setAs("DEFCP", "DEFNL", function(from){
     k <- length(cList)
     ## Amending LHS of equality constraints, if applicable
     if(dim(from@A)[1] == 0){
-        A <- Matrix(0, nrow = 0, ncol = n)
+        A <- matrix(0, nrow = 0, ncol = n)
     } else {
         A <- cbind2(0, from@A)
     }
@@ -63,6 +63,6 @@ setAs("DEFCP", "DEFNL", function(from){
         k = k,
         n = n,
         mnl = mnl,
-        H = Matrix(0, nrow = n, ncol = n),
+        H = matrix(0, nrow = n, ncol = n),
         ctrl = from@ctrl)
     })

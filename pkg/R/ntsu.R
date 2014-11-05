@@ -50,7 +50,7 @@ setMethod("ntsu", signature = c("PSDS", "PSDV", "PSDV"), function(W, s, z){
     dim(z@u) <- c(z@dims, z@dims)
     ZS <- crossprod(z@u, s@u)
     SVD <- svd(ZS)
-    l <- Diagonal(x = SVD$d)
+    l <- diag(x = SVD$d)
     lisqrt <- diag(x = 1 / sqrt(SVD$d))
     r <- W@W[["r"]] %*% s@u %*% SVD$v %*% lisqrt
     rti <- W@W[["rti"]] %*% z@u %*% SVD$u %*% lisqrt

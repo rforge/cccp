@@ -62,9 +62,6 @@ setGeneric("usnt", function(u, W, ...) standardGeneric("usnt"))
 ## Generic for Log-Barrier-scaling of cone constraints and variables
 setGeneric("uslb", function(u, lambda, ...) standardGeneric("uslb"))
 ##
-## Generic for packed-storage of symmetric matrices
-setGeneric("uvec", function(u) standardGeneric("uvec"))
-##
 ## Generic for extractor of x-variables
 setGeneric("getx", function(object) standardGeneric("getx"))
 ##

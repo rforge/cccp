@@ -18,9 +18,9 @@ Objects can be created by calls of the form \code{new("DEFLP",
   \describe{
     \item{\code{q}:}{Object of class \code{"vector"}: A \eqn{(n \times
 	1)} vector of the coefficients in the objective function.}
-    \item{\code{A}:}{Object of class \code{"Matrix"}: A \eqn{(p
+    \item{\code{A}:}{Object of class \code{"matrix"}: A \eqn{(p
 	\times n)} matrix of the equality constraints (lhs).}
-    \item{\code{b}:}{Object of class \code{"Matrix"}: A \eqn{(p
+    \item{\code{b}:}{Object of class \code{"matrix"}: A \eqn{(p
 	\times 1)} matrix of the equality constraints (rhs).}
     \item{\code{cList}:}{Object of class \code{"list"}: The elements
       of \code{cList} are the cone constraints, each of either

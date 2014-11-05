@@ -8,8 +8,8 @@ test.FPLN <- function(){
     rho <- 1.0
     Amin <- 100
     ## Inequality constraints
-    G <- Matrix(0.0, nrow = 26, ncol = 22)
-    h <- Matrix(0.0, nrow = 26, ncol = 1)
+    G <- matrix(0.0, nrow = 26, ncol = 22)
+    h <- matrix(0.0, nrow = 26, ncol = 1)
     G[1, 3] <- -1.0                                       ## -x1 <= 0
     G[2, 4] <- -1.0                                       ## -x2 <= 0
     G[3, 6] <- -1.0                                       ## -x4 <= 0

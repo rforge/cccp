@@ -4,8 +4,8 @@ test.SOCV <- function(){
     set.seed(12345)
     ## Creating SOC-points
     p <- 10L
-    s <- new("SOCV", u = Matrix(c(p + 1, runif(p - 1))), dims = p)
-    z <- new("SOCV", u = Matrix(c(p + 1, runif(p - 1))), dims = p)
+    s <- new("SOCV", u = matrix(c(p + 1, runif(p - 1))), dims = p)
+    z <- new("SOCV", u = matrix(c(p + 1, runif(p - 1))), dims = p)
     onep <- uone(s)
     checkEquals(sum(onep@u * onep@u), 1)
     term1 <- sum(uprd(s, z)@u * onep@u)

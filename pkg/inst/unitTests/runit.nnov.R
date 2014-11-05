@@ -4,8 +4,8 @@ test.NNOV <- function(){
     set.seed(12345)
     ## Creating NNO-points
     n <- 10L
-    s <- new("NNOV", u = Matrix(runif(n)), dims = n)
-    z <- new("NNOV", u = Matrix(runif(n)), dims = n)
+    s <- new("NNOV", u = matrix(runif(n)), dims = n)
+    z <- new("NNOV", u = matrix(runif(n)), dims = n)
     onep <- uone(s)
     checkEquals(sum(onep@u * onep@u), s@dims)
     term1 <- sum(uprd(s, z)@u * onep@u)

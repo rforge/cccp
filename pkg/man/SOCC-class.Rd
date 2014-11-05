@@ -17,7 +17,7 @@ Objects can be created by calls of the form \code{new("SOCC",
 
 \section{Slots}{
   \describe{
-    \item{\code{G}:}{Object of class \code{"Matrix"}: A \eqn{(p \times n)} matrix
+    \item{\code{G}:}{Object of class \code{"matrix"}: A \eqn{(p \times n)} matrix
       containing the coefficients pertinent to the variable \eqn{x}.}
     \item{\code{h}:}{Object of class \code{"vector"}: A \eqn{(p \times 1)} vector
       containing the coefficients pertinent to the affine terms in the soc-constraints.}

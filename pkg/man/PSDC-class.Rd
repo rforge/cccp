@@ -17,7 +17,7 @@ Objects can be created by calls of the form \code{new("PSDC",
 
 \section{Slots}{
   \describe{
-    \item{\code{G}:}{Object of class \code{"Matrix"}: A \eqn{(p(p + 1) /
+    \item{\code{G}:}{Object of class \code{"matrix"}: A \eqn{(p(p + 1) /
       2 \times n)} matrix containing the coefficients pertinent to the
       variable \eqn{x}.}
     \item{\code{h}:}{Object of class \code{"PSDV"}: Object containing

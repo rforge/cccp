@@ -1,9 +1,9 @@
 \name{usnt}
 \alias{usnt}
-\alias{usnt,Matrix,NLFS-method}
-\alias{usnt,Matrix,NNOS-method}
-\alias{usnt,Matrix,SOCS-method}
-\alias{usnt,Matrix,PSDS-method}
+\alias{usnt,matrix,NLFS-method}
+\alias{usnt,matrix,NNOS-method}
+\alias{usnt,matrix,SOCS-method}
+\alias{usnt,matrix,PSDS-method}
 
 \title{
   Nesterov-Todd scaling of cone constraints and variables.
@@ -15,10 +15,10 @@
 }
 
 \usage{
-\S4method{usnt}{Matrix,NLFS}(u, W, trans = FALSE, inv = FALSE)  
-\S4method{usnt}{Matrix,NNOS}(u, W, trans = FALSE, inv = FALSE)  
-\S4method{usnt}{Matrix,SOCS}(u, W, trans = FALSE, inv = FALSE)  
-\S4method{usnt}{Matrix,PSDS}(u, W, trans = FALSE, inv = FALSE)  
+\S4method{usnt}{matrix,NLFS}(u, W, trans = FALSE, inv = FALSE)  
+\S4method{usnt}{matrix,NNOS}(u, W, trans = FALSE, inv = FALSE)  
+\S4method{usnt}{matrix,SOCS}(u, W, trans = FALSE, inv = FALSE)  
+\S4method{usnt}{matrix,PSDS}(u, W, trans = FALSE, inv = FALSE)  
 }
 
 \arguments{

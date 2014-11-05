@@ -26,26 +26,22 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
         stop(paste("Initial point 'x0' is not in the domain of nonlinear convex constraint(s): ", idxnan, ".\n", sep = ""))
     }
     ## creating initial NLFC object and adding to cList as first object
-    h <- new("NLFV", u = Matrix(0, nrow = mnl), dims = mnl)
-    nlfc <- new("NLFC", G = Matrix(0, nrow = mnl, ncol = n), h = h, dims = mnl, vclass = "NLFV")
+    h <- new("NLFV", u = matrix(0, nrow = mnl), dims = mnl)
+    nlfc <- new("NLFC", G = matrix(0, nrow = mnl, ncol = n), h = h, dims = mnl, vclass = "NLFV")
     cList <- c(nlfc, cList)
     ## Equality constraints
     if(is.null(A)){
-        A <- Matrix(0, nrow = 0, ncol = n)
+        A <- matrix(0, nrow = 0, ncol = n)
     } 
     if(is.null(dim(A))){
-        A <- Matrix(A, nrow = 1)
-    } else {
-        if(!any(extends(class(A)) %in% "Matrix"))  A <- as(A, "Matrix")
-    }
+        A <- matrix(A, nrow = 1)
+    } 
     if(is.null(b)){
-        b <- Matrix(0, nrow = 0, ncol = 1)
+        b <- matrix(0, nrow = 0, ncol = 1)
     }
     if(is.null(dim(b))){
-        b <- Matrix(b, ncol = 1)
-    } else {
-        if(!any(extends(class(A)) %in% "Matrix"))  b <- as(b, "Matrix")
-    }
+        b <- matrix(b, ncol = 1)
+    } 
     cpdef <- new("DEFNL",
                  x0 = x0,
                  q = q,
@@ -56,7 +52,7 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
                  k = k + 1L,
                  n = n,
                  mnl = mnl,
-                 H = Matrix(0, nrow = n, ncol = n),
+                 H = matrix(0, nrow = n, ncol = n),
                  ctrl = optctrl)
     cpsol <- cps(cpdef)
     return(cpsol)   

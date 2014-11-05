@@ -8,8 +8,8 @@ setMethod("ntsc", signature = c("NNOV", "NNOV"), function(s, z){
 })
 ## Initial scaling
 setMethod("ntsc", signature = c("NNOC", "missing"), function(s, z){
-    di <- d <- Matrix(1, nrow = s@dims, ncol = 1)
-    lambda <- new("NNOV", u = Matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
+    di <- d <- matrix(1, nrow = s@dims, ncol = 1)
+    lambda <- new("NNOV", u = matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
     new("NNOS", W = list(d = d, di = di, lambda = lambda))
 })
 ##
@@ -25,7 +25,7 @@ setMethod("ntsc", signature = c("SOCV", "SOCV"), function(s, z){
     v <- 1.0 / 2.0 / cc * v
     v[1] <- v[1] + 1.0
     v <- 1.0 / sqrt(2.0 * v[1]) * v
-    lambda <- Matrix(0, nrow = s@dims, ncol = 1)
+    lambda <- matrix(0, nrow = s@dims, ncol = 1)
     lambda[1, 1] <- cc
     dd <- 2 * cc + s@u[1, 1] / aa + z@u[1, 1] / bb
     lambda[-1, 1] <- s@u[-1, 1]
@@ -37,9 +37,9 @@ setMethod("ntsc", signature = c("SOCV", "SOCV"), function(s, z){
 ## Initial scaling
 setMethod("ntsc", signature = c("SOCC", "missing"), function(s, z){
     beta <- 1.0
-    v <- Matrix(0, nrow = s@dims, ncol = 1)
+    v <- matrix(0, nrow = s@dims, ncol = 1)
     v[1, 1] <- 1.0
-    lambda <- new("SOCV", u = Matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
+    lambda <- new("SOCV", u = matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
     new("SOCS", W = list(v = v, beta = beta, lambda = lambda))
 })
 ##
@@ -55,15 +55,15 @@ setMethod("ntsc", signature = c("PSDV", "PSDV"), function(s, z){
     lsqrt <- sqrt(SVD$d)
     r <- solve(Uz) %*% SVD$u %*% diag(x = lsqrt)
     rti <- crossprod(Uz,SVD$u) %*% diag(x = 1 / lsqrt)
-    l <- Diagonal(x = SVD$d)
+    l <- diag(x = SVD$d)
     dim(l) <- c(s@dims^2, 1)
     lambda <- new("PSDV", u = l, dims = s@dims)
     new("PSDS", W = list(r = r, rti = rti, lambda = lambda))
 })
 ## Initial scaling (all variables (s, z, lambda) in column-stacked order)
 setMethod("ntsc", signature = c("PSDC", "missing"), function(s, z){
-    r <- rti <- Diagonal(s@dims)
-    lambda <- new("PSDV", u = Matrix(0, nrow = s@dims^2, ncol = 1), dims = s@dims)
+    r <- rti <- diag(s@dims)
+    lambda <- new("PSDV", u = matrix(0, nrow = s@dims^2, ncol = 1), dims = s@dims)
     new("PSDS", W = list(r = r, rti = rti, lambda = lambda))
 })
 ##
@@ -76,7 +76,7 @@ setMethod("ntsc", signature = c("NLFV", "NLFV"), function(s, z){
 })
 ## Initial scaling
 setMethod("ntsc", signature = c("NLFC", "missing"), function(s, z){
-    dnli <- dnl <- Matrix(1, nrow = s@dims, ncol = 1)
-    lambda <- new("NLFV", u = Matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
+    dnli <- dnl <- matrix(1, nrow = s@dims, ncol = 1)
+    lambda <- new("NLFV", u = matrix(0, nrow = s@dims, ncol = 1), dims = s@dims)
     new("NLFS", W = list(dnl = dnl, dnli = dnli, lambda = lambda))
 })

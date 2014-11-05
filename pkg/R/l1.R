@@ -11,13 +11,13 @@ l1 <- function(P, q = NULL, optctrl = ctrl()){
     }
     ## Creating NNO-constraint
     target <- c(rep(0, n), rep(1, m))
-    G <- Matrix(0, nrow = m + m, ncol = n + m)
+    G <- matrix(0, nrow = m + m, ncol = n + m)
     G[1:m, 1:n] <- P
-    D <- Diagonal(m)
+    D <- diag(m)
     G[1:m, -c(1:n)] <- -D
     G[-c(1:m), 1:n] <- -P
     G[-c(1:m), -c(1:n)] <- -D
-    h <- Matrix(c(q, -q), nrow = m + m, ncol = 1)
+    h <- matrix(c(q, -q), nrow = m + m, ncol = 1)
     nno1 <- nnoc(G = G, h = h)
     ## Defining LP and solving
     l1cpd <- cpd(P = NULL, q = target, cList = list(nno1), optctrl = optctrl)

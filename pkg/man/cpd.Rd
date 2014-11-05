@@ -15,9 +15,9 @@ cpd(P, q, A = NULL, b = NULL, cList = list(), optctrl = ctrl())
 }
 
 \arguments{
-  \item{P}{An object of class \code{Matrix} with dimension \eqn{n \times n}.}
+  \item{P}{An object of class \code{matrix} with dimension \eqn{n \times n}.}
   \item{q}{An object of class \code{vector} with dimension \eqn{n \times 1}.}
-  \item{A}{An object of class \code{Matrix} with dimension \eqn{p \times
+  \item{A}{An object of class \code{matrix} with dimension \eqn{p \times
       n} or \code{NULL} for problems without equality constraints.}
   \item{b}{An object of class \code{vector} with dimension \eqn{p \times
       1} or \code{NULL} for problems without equality constraints.}

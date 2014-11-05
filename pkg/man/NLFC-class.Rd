@@ -17,7 +17,7 @@ Objects can be created by calls of the form \code{new("NLFC",
 
 \section{Slots}{
   \describe{
-    \item{\code{G}:}{Object of class \code{"Matrix"}: A \eqn{(m \times n)} matrix
+    \item{\code{G}:}{Object of class \code{"matrix"}: A \eqn{(m \times n)} matrix
       containing the coefficients of the lefthand-side linear inequality
       constraints.}
     \item{\code{h}:}{Object of class \code{"NLFV"}: A \eqn{(m \times 1)} vector

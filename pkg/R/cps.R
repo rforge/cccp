@@ -311,9 +311,7 @@ setMethod("cps", signature = "DEFLP", function(cpd){
                 z
             })
             SolKkt2@tau <- (1 - sigma) * rt
-            SolKkt2@x
             SolKkt2 <- kktSOL(cpd, SolKkt2, SolKkt1, W, WhL, sdv, kktslv, refine = ctrl@refine)
-            SolKkt2@x
             if(ii == 0){
                 ## ds o dz for Mehrotra correction
                 dsdz <- lapply(idx, function(j) uprd(SolKkt2@s[[j]], SolKkt2@z[[j]]))
@@ -357,11 +355,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
 
         if(length(idxPSD) > 0){
             for(j in idxPSD){
-                s <- Matrix(MaxStepS[[j]]$evd$vectors)
+                s <- matrix(MaxStepS[[j]]$evd$vectors)
                 dim(s) <- c(SolKkt2@s[[j]]@dims^2, 1)
                 SolKkt2@s[[j]]@u <- s
                 sigs <- MaxStepS[[j]]$evd$values
-                z <- Matrix(MaxStepZ[[j]]$evd$vectors)
+                z <- matrix(MaxStepZ[[j]]$evd$vectors)
                 dim(z) <- c(SolKkt2@z[[j]]@dims^2, 1)
                 SolKkt2@z[[j]]@u <- z
                 sigz <- MaxStepZ[[j]]$evd$values
@@ -651,11 +649,11 @@ setMethod("cps", signature = "DEFQP", function(cpd){
 
         if(length(idxPSD) > 0){
             for(j in idxPSD){
-                s <- Matrix(MaxStepS[[j]]$evd$vectors)
+                s <- matrix(MaxStepS[[j]]$evd$vectors)
                 dim(s) <- c(SolKkt@s[[j]]@dims^2, 1)
                 SolKkt@s[[j]]@u <- s
                 sigs <- MaxStepS[[j]]$evd$values
-                z <- Matrix(MaxStepZ[[j]]$evd$vectors)
+                z <- matrix(MaxStepZ[[j]]$evd$vectors)
                 dim(z) <- c(SolKkt@z[[j]]@dims^2, 1)
                 SolKkt@z[[j]]@u <- z
                 sigz <- MaxStepZ[[j]]$evd$values
@@ -743,14 +741,14 @@ setMethod("cps", signature = "DEFNL", function(cpd){
     ##
     for(i in 0:(ctrl@maxiters + 1)){
         ## Setting Df to 'G' slot of NLFC
-        cpd@cList[[1]]@G <- Matrix(do.call("rbind", lapply(cpd@nlfList, grad, x = CurPdv@x)))
+        cpd@cList[[1]]@G <- do.call("rbind", lapply(cpd@nlfList, grad, x = CurPdv@x))
         ## Setting f to 'h' slot of NLFC
-        cpd@cList[[1]]@h@u <- Matrix(unlist(lapply(
+        cpd@cList[[1]]@h@u <- matrix(unlist(lapply(
             cpd@nlfList, function(nlf) nlf(CurPdv@x))),
                                      nrow = cpd@mnl, ncol = 1)
         ## Computing Hessian and setting to cpd@H
         cpd@H <- Reduce("+", lapply(1:cpd@mnl, function(j){
-            Matrix(CurPdv@z[[1]]@u[j, 1] * hessian(func = cpd@nlfList[[j]], x = CurPdv@x))
+            matrix(CurPdv@z[[1]]@u[j, 1] * hessian(func = cpd@nlfList[[j]], x = CurPdv@x))
         }))
         ## Computing gap
         gap <- sum(sapply(idx, function(j) udot(CurPdv@s[[j]], CurPdv@z[[j]])))
@@ -902,8 +900,8 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 if(any(is.nan(Fval))){
                     newFval <- NULL
                 } else {
-                    newFval <- Matrix(Fval, nrow = mnl, ncol = 1)
-                    newDF <- Matrix(do.call("rbind", lapply(cpd@nlfList, grad, x = x)))
+                    newFval <- matrix(Fval, nrow = mnl, ncol = 1)
+                    newDF <- matrix(do.call("rbind", lapply(cpd@nlfList, grad, x = x)))
                     backtrack = FALSE
                 }
                 step <- step * ctrl@beta
@@ -933,10 +931,10 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                     ans
                 })
                                
-                cpd@cList[[1]]@h@u <- Matrix(unlist(lapply(
+                cpd@cList[[1]]@h@u <- matrix(unlist(lapply(
                     cpd@nlfList, function(f) f(NewPdv@x))), ncol = 1) ## newf
-                cpd@cList[[1]]@G <- Matrix(do.call("rbind", lapply(
-                    cpd@nlfList, grad, x = NewPdv@x))) ## newDf
+                cpd@cList[[1]]@G <- do.call("rbind", lapply(
+                    cpd@nlfList, grad, x = NewPdv@x)) ## newDf
 
                 ## Residuals
                 ## Dual Residuals
@@ -984,9 +982,6 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                             step0 <- step
                             W0 <- W
                             CurPdv0 <- CurPdv
-                            DeltaPdv0 <- DeltaPdv
-                            ds20 <- ds2
-                            dz20 <- dz2
                             lambdasq0 <- lambdasq
                             dsdz0 <- dsdz
                             sigma0 <- sigma
@@ -1021,9 +1016,6 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                         step <- step0
                         W <- W0
                         CurPdv <- CurPdv0
-                        DeltaPdv <- DeltaPdv0
-                        ds2 <- ds20
-                        dz2 <- dz20
                         lambdasq <- lambdasq0            
                         dsdz <- dsdz0
                         sigma <- sigma0
@@ -1055,11 +1047,11 @@ setMethod("cps", signature = "DEFNL", function(cpd){
 
         if(length(idxPSD) > 0){
             for(j in idxPSD){
-                s <- Matrix(Re(MaxStepS[[j]]$evd$vectors))
+                s <- matrix(Re(MaxStepS[[j]]$evd$vectors))
                 dim(s) <- c(SolKkt@s[[j]]@dims^2, 1)
                 SolKkt@s[[j]]@u <- s
                 sigs <- Re(MaxStepS[[j]]$evd$values)
-                z <- Matrix(Re(MaxStepZ[[j]]$evd$vectors))
+                z <- matrix(Re(MaxStepZ[[j]]$evd$vectors))
                 dim(z) <- c(SolKkt@z[[j]]@dims^2, 1)
                 SolKkt@z[[j]]@u <- z
                 sigz <- Re(MaxStepZ[[j]]$evd$values)

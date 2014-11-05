@@ -9,7 +9,7 @@ adat <- c(0.3, -0.4, -0.2, -0.4, 1.3,
           -0.3, 0.0, 0.6, -1.2, -2.0)
 A <- matrix(adat, nrow = 5, ncol = 3)
 b <- c(1.5, 0.0, -1.2, -0.7, 0.0)
-P <- Matrix(crossprod(A))
+P <- crossprod(A)
 q <- -crossprod(A, b)
 G = -diag(3)
 h = rep(0, 3)

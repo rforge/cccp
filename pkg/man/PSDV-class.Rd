@@ -17,7 +17,7 @@
 
 \section{Slots}{
   \describe{
-    \item{\code{u}:}{Object of class \code{"Matrix"}: A matrix
+    \item{\code{u}:}{Object of class \code{"matrix"}: A matrix
       representing a point with respect to the positive semidefinte cone
       in \code{vech}-notation.}
     \item{\code{dims}:}{Object of class \code{"integer"}: The degree

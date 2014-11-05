@@ -1,24 +1,34 @@
-#include "RcppArmadillo.h"
-
-// [[Rcpp::depends(RcppArmadillo)]]
-
 /*
-Inner product of two vectors in S.
-sdot_nls is used for nonlinear, linear and second-order cone constraints.
-sdot_p is used for positive semi-definite constraints.
+ * Inner product of two vectors in S.
+ * sdot_nls is used for nonlinear, linear and second-order cone constraints.
+ * sdot_p is used for positive semi-definite constraints.
 */
 
+#include "RcppArmadillo.h"
+// [[Rcpp::depends(RcppArmadillo)]]
 
 // [[Rcpp::export(".sdot_nls")]]
-double sdot_nls(const arma::colvec & u, const arma::colvec & v) {
-  double ans = arma::dot(u, v);
+double sdot_nls(SEXP us, SEXP vs) {
+
+  Rcpp::NumericVector u(us);
+  Rcpp::NumericVector v(vs);
+  arma::colvec ua(u.begin(), u.size(), false);
+  arma::colvec va(v.begin(), v.size(), false);
+
+  double ans = arma::dot(ua, va);
+
   return ans;
 }
 
 // [[Rcpp::export(".sdot_p")]]
-double sdot_p(const arma::colvec & u, const arma::colvec & v, const int & m) {
+double sdot_p(SEXP us, SEXP vs, SEXP ms) {
+
+  Rcpp::NumericVector u(us);
+  Rcpp::NumericVector v(vs);
+  int m = Rcpp::as<int>(ms);
+  int n = u.size();
   double ans = 0.0;
-  int n = u.n_elem;
+
   // squaring and summing diagonal elements
   for(int i = 0; i < n; i += m + 1){
     ans += u[i] * v[i];
@@ -31,5 +41,6 @@ double sdot_p(const arma::colvec & u, const arma::colvec & v, const int & m) {
       }
     }
   }
+
   return ans;
 }

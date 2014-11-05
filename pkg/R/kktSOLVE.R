@@ -3,8 +3,7 @@
 kktSOLVE <- function(cpd){
     kktSLV <- function(W, cpd){
         ldK <- sum(dim(cpd@A))
-        K <- Matrix(0, nrow = ldK, ncol = ldK)
-        K <- as(K, "dsyMatrix")
+        K <- matrix(0, nrow = ldK, ncol = ldK)
         n <- cpd@n
         idx <- 1:cpd@k
         if(class(cpd) == "DEFQP") K[1:n, 1:n] <- cpd@P
@@ -27,8 +26,8 @@ kktSOLVE <- function(cpd){
             }))
             RHS <- c(x + drop(GtWiWitz), drop(y))
             ans <- solve(K, RHS)
-            x <- ans[1:n, 1]
-            y <- ans[-(1:n), 1]
+            x <- ans[1:n]
+            y <- ans[-(1:n)]
             z <- lapply(idx, function(j){
                 uz <- new(cpd@cList[[j]]@vclass, u = cpd@cList[[j]]@G %*% x - z[[j]]@u, dims = cpd@cList[[j]]@dims)
                 usnt(uz@u, W[[j]], inv = TRUE, trans = TRUE)

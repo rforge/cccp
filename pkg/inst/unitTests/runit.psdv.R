@@ -4,10 +4,10 @@ test.PSDV <- function(){
     set.seed(12345)
     ## Creating PSD-points
     n <- 4L
-    s <- crossprod(Matrix(rnorm(n^2), ncol = n, nrow = n))
+    s <- crossprod(matrix(rnorm(n^2), ncol = n, nrow = n))
     dim(s) <- c(n^2, 1)
     s <- new("PSDV", u = s, dims = n)
-    z <- crossprod(Matrix(rnorm(n^2), ncol = n, nrow = n))
+    z <- crossprod(matrix(rnorm(n^2), ncol = n, nrow = n))
     dim(z) <- c(n^2, 1)
     z <- new("PSDV", u = z, dims = n)
     onep <- uone(s)

@@ -16,7 +16,7 @@ Objects can be created by calls of the form \code{new("SOCV",
 
 \section{Slots}{
   \describe{
-    \item{\code{u}:}{Object of class \code{"Matrix"}: A vector
+    \item{\code{u}:}{Object of class \code{"matrix"}: A vector
       for a variable with respect to the second-order cone.} 
     \item{\code{dims}:}{Object of class \code{"integer"}: The dimension
       of the cone.}

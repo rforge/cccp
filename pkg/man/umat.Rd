@@ -12,7 +12,7 @@
   This method converts a vector (one-column matrix) of an
   S4-class object \code{PSDV} in its (symmetric)
   matrix-representation. The off-diagonal entries of the resulting
-  Matrix are divided by \eqn{\sqrt{2}}.
+  matrix are divided by \eqn{\sqrt{2}}.
 }
 
 \usage{
