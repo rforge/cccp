@@ -109,11 +109,31 @@
     .Call('cccp_sprd_p', PACKAGE = 'cccp', us, vs, ms)
 }
 
+.sslb_nl <- function(us, lambdas, invs) {
+    .Call('cccp_sslb_nl', PACKAGE = 'cccp', us, lambdas, invs)
+}
+
+.sslb_s <- function(us, lambdas, invs) {
+    .Call('cccp_sslb_s', PACKAGE = 'cccp', us, lambdas, invs)
+}
+
+.sslb_p <- function(us, lambdas, invs, ms) {
+    .Call('cccp_sslb_p', PACKAGE = 'cccp', us, lambdas, invs, ms)
+}
+
+.ssnt_n <- function(us, Ws, invs) {
+    .Call('cccp_ssnt_n', PACKAGE = 'cccp', us, Ws, invs)
+}
+
 .ssnt_l <- function(us, Ws, invs) {
     .Call('cccp_ssnt_l', PACKAGE = 'cccp', us, Ws, invs)
 }
 
 .ssnt_s <- function(us, Ws, invs) {
     .Call('cccp_ssnt_s', PACKAGE = 'cccp', us, Ws, invs)
+}
+
+.ssnt_p <- function(us, Ws, transs, invs) {
+    .Call('cccp_ssnt_p', PACKAGE = 'cccp', us, Ws, transs, invs)
 }
 
