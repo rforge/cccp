@@ -1,5 +1,6 @@
 \name{rprim}
 \alias{rprim}
+\alias{rprim,PDV,DEFCP-method}
 \alias{rprim,PDV,DEFNL-method}
 \alias{rprim,PDV,DEFLP-method}
 \alias{rprim,PDV,DEFQP-method}
@@ -14,6 +15,7 @@
 }
 
 \usage{
+\S4method{rprim}{PDV,DEFCP}(pdv, cpd)  
 \S4method{rprim}{PDV,DEFNL}(pdv, cpd)  
 \S4method{rprim}{PDV,DEFLP}(pdv, cpd)  
 \S4method{rprim}{PDV,DEFQP}(pdv, cpd)  
@@ -37,7 +39,8 @@
 
 \seealso{
   \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}},
-  \code{\linkS4class{DEFNL}}, \code{\linkS4class{PDV}}
+  \code{\linkS4class{DEFNL}}, \code{\linkS4class{DEFCP}},
+  \code{\linkS4class{PDV}}
 }
 
 \keyword{optimize}

@@ -1,13 +1,7 @@
 ##
 ## Update Nesterov-Todd scalings and lambda for variables in NNO cones
 setMethod("ntsu", signature = c("NNOS", "NNOV", "NNOV"), function(W, s, z){
-    s <- sqrt(s@u)
-    z <- sqrt(z@u)
-    d <- W@W[["d"]] * s / z
-    di <- 1 / d
-    l <- W@W[["lambda"]]
-    l@u[, 1] <- s * z
-    new("NNOS", W = list(d = d, di = di, lambda = l))
+    .ntsu_l(W@W, s@u, z@u)
 })
 ##
 ## Update Nesterov-Todd scalings and lambda for variables in SOC cones

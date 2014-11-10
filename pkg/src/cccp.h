@@ -33,7 +33,16 @@ SEXP smsa_nl(SEXP us, SEXP alphas, SEXP inits);
 SEXP smsa_s(SEXP us, SEXP alphas, SEXP inits);
 SEXP smsa1_p(SEXP us, SEXP alphas, SEXP ms);
 SEXP smsa2_p(SEXP us, SEXP alphas, SEXP sigmas, SEXP lambdas, SEXP ms);
+SEXP ssnt_n(SEXP us, SEXP Ws, SEXP invs);
 SEXP ssnt_l(SEXP us, SEXP Ws, SEXP invs);
 SEXP ssnt_s(SEXP us, SEXP Ws, SEXP invs);
+SEXP ssnt_p(SEXP us, SEXP Ws, SEXP transs, SEXP invs); 
+SEXP sslb_nl(SEXP us, SEXP lambdas, SEXP invs);
+SEXP sslb_s(SEXP us, SEXP lambdas, SEXP invs);
+SEXP sslb_p(SEXP us, SEXP lambdas, SEXP invs, SEXP ms);
+SEXP ntsc_n(SEXP ss, SEXP zs);
+SEXP ntsc_l(SEXP ss, SEXP zs);
+SEXP ntsc_s(SEXP ss, SEXP zs);
+SEXP ntsc_p(SEXP ss, SEXP zs, SEXP ms);
 
 #endif

@@ -108,4 +108,35 @@ setMethod("kktSOL", signature = "DEFNL", function(cpd, SolKkt, W, kktslv, refine
     })
     return(SolKkt)
 })
+##
+## Method for determining a solution of a KKT-system for convex programs with nonlinear constraints
+setMethod("kktSOL", signature = "DEFCP", function(cpd, SolKkt, W, kktslv, refine = FALSE){
+    ## If iterative refinement
+    if(refine){
+        WVar <- SolKkt
+        SolKkt <- kktSOL(cpd, SolKkt, W, kktslv, refine = FALSE)
+        for(i in 0:1){
+            WVar2 <- WVar
+            WVar2 <- kktRES(cpd, SolKkt, WVar2, W)
+            SolKkt <- kktSOL(cpd, WVar2, W, kktslv, refine = FALSE)
+        }
+        return(SolKkt)
+    }
+    ## Solving KKT-sytem
+    SolKkt@s <- lapply(1:cpd@k, function(j) uinv(SolKkt@s[[j]], W[[j]]@W[["lambda"]]))
+    Ws3 <- lapply(1:cpd@k, function(j) usnt(SolKkt@s[[j]]@u, W[[j]], inv = FALSE, trans = TRUE))
+    SolKkt@z <- lapply(1:cpd@k, function(j){
+        SolKkt@z[[j]]@u <- matrix(SolKkt@z[[j]]@u - Ws3[[j]]@u)
+        SolKkt@z[[j]]
+    })
+    ans <- with(kktslv@items, kktslv@f(x = SolKkt@x, y = SolKkt@y, z = SolKkt@z))
+    SolKkt@x <- ans$x 
+    SolKkt@y <- ans$y
+    SolKkt@z <- ans$z
+    SolKkt@s <- lapply(1:cpd@k, function(j){
+        SolKkt@s[[j]]@u <- SolKkt@s[[j]]@u - SolKkt@z[[j]]@u
+        SolKkt@s[[j]]
+    })
+    return(SolKkt)
+})
 

@@ -17,7 +17,7 @@ double sdot_nls(SEXP us, SEXP vs) {
 
   double ans = arma::dot(ua, va);
 
-  return ans;
+  return(ans);
 }
 
 // [[Rcpp::export(".sdot_p")]]
@@ -42,5 +42,17 @@ double sdot_p(SEXP us, SEXP vs, SEXP ms) {
     }
   }
 
-  return ans;
+  return(ans);
+}
+
+// [[Rcpp::export(".snrm2_nls")]]
+double snrm2_nls(SEXP us) {
+  double ans = sqrt(sdot_nls(us, us));
+  return(ans);
+}
+
+// [[Rcpp::export(".snrm2_p")]]
+double snrm2_p(SEXP us, SEXP ms) {
+  double ans = sqrt(sdot_p(us, us, ms));
+  return(ans);
 }

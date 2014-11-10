@@ -38,7 +38,6 @@ exportClasses(
 ##
 exportMethods(
     "cps",
-    "coerce",
     "dgap",
     "dobj",
     "gets",
@@ -76,6 +75,7 @@ export(
     "cpl",
     "cpn",
     "ctrl",
+    "kktCP",
     "kktSOLVE",
     "l1",
     "nlfc",

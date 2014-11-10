@@ -21,3 +21,11 @@ setMethod("rdual", signature = c("PDV", "DEFNL"), function(pdv, cpd){
     Ay <- crossprod(cpd@A, pdv@y)
     drop(Ay + Gz + cpd@q)
 })
+##
+## Dual residuals for CPs with nonlinear/cone inequality and equality constraints
+setMethod("rdual", signature = c("PDV", "DEFCP"), function(pdv, cpd){
+    Gz <- 0
+    for(i in 1:cpd@k) Gz <- Gz + crossprod(cpd@cList[[i]]@G, pdv@z[[i]]@u)
+    Ay <- crossprod(cpd@A, pdv@y)
+    drop(Ay + Gz + cpd@q)
+})

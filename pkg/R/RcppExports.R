@@ -9,12 +9,40 @@
     .Call('cccp_jnrm2', PACKAGE = 'cccp', us)
 }
 
+.ntsc_n <- function(ss, zs) {
+    .Call('cccp_ntsc_n', PACKAGE = 'cccp', ss, zs)
+}
+
+.ntsc_l <- function(ss, zs) {
+    .Call('cccp_ntsc_l', PACKAGE = 'cccp', ss, zs)
+}
+
+.ntsc_s <- function(ss, zs) {
+    .Call('cccp_ntsc_s', PACKAGE = 'cccp', ss, zs)
+}
+
+.ntsc_p <- function(ss, zs, ms) {
+    .Call('cccp_ntsc_p', PACKAGE = 'cccp', ss, zs, ms)
+}
+
+.ntsu_l <- function(Ws, ss, zs) {
+    .Call('cccp_ntsu_l', PACKAGE = 'cccp', Ws, ss, zs)
+}
+
 .sdot_nls <- function(us, vs) {
     .Call('cccp_sdot_nls', PACKAGE = 'cccp', us, vs)
 }
 
 .sdot_p <- function(us, vs, ms) {
     .Call('cccp_sdot_p', PACKAGE = 'cccp', us, vs, ms)
+}
+
+.snrm2_nls <- function(us) {
+    .Call('cccp_snrm2_nls', PACKAGE = 'cccp', us)
+}
+
+.snrm2_p <- function(us, ms) {
+    .Call('cccp_snrm2_p', PACKAGE = 'cccp', us, ms)
 }
 
 .sinv_nl <- function(us, vs) {
@@ -57,14 +85,6 @@
     .Call('cccp_smss_p', PACKAGE = 'cccp', us, ms)
 }
 
-.snrm2_nls <- function(us) {
-    .Call('cccp_snrm2_nls', PACKAGE = 'cccp', us)
-}
-
-.snrm2_p <- function(us, ms) {
-    .Call('cccp_snrm2_p', PACKAGE = 'cccp', us, ms)
-}
-
 .sone_nl <- function(us) {
     .Call('cccp_sone_nl', PACKAGE = 'cccp', us)
 }
@@ -89,11 +109,31 @@
     .Call('cccp_sprd_p', PACKAGE = 'cccp', us, vs, ms)
 }
 
+.sslb_nl <- function(us, lambdas, invs) {
+    .Call('cccp_sslb_nl', PACKAGE = 'cccp', us, lambdas, invs)
+}
+
+.sslb_s <- function(us, lambdas, invs) {
+    .Call('cccp_sslb_s', PACKAGE = 'cccp', us, lambdas, invs)
+}
+
+.sslb_p <- function(us, lambdas, invs, ms) {
+    .Call('cccp_sslb_p', PACKAGE = 'cccp', us, lambdas, invs, ms)
+}
+
+.ssnt_n <- function(us, Ws, invs) {
+    .Call('cccp_ssnt_n', PACKAGE = 'cccp', us, Ws, invs)
+}
+
 .ssnt_l <- function(us, Ws, invs) {
     .Call('cccp_ssnt_l', PACKAGE = 'cccp', us, Ws, invs)
 }
 
 .ssnt_s <- function(us, Ws, invs) {
     .Call('cccp_ssnt_s', PACKAGE = 'cccp', us, Ws, invs)
+}
+
+.ssnt_p <- function(us, Ws, transs, invs) {
+    .Call('cccp_ssnt_p', PACKAGE = 'cccp', us, Ws, transs, invs)
 }
 

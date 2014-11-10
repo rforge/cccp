@@ -1,5 +1,7 @@
 \name{pobj}
 \alias{pobj}
+\alias{pobj,numeric,DEFCP-method}
+\alias{pobj,PDV,DEFCP-method}
 \alias{pobj,numeric,DEFNL-method}
 \alias{pobj,PDV,DEFNL-method}
 \alias{pobj,numeric,DEFLP-method}
@@ -17,6 +19,8 @@
 }
 
 \usage{
+\S4method{pobj}{numeric,DEFCP}(pdv, cpd)  
+\S4method{pobj}{PDV,DEFCP}(pdv, cpd)  
 \S4method{pobj}{numeric,DEFNL}(pdv, cpd)  
 \S4method{pobj}{PDV,DEFNL}(pdv, cpd)  
 \S4method{pobj}{numeric,DEFLP}(pdv, cpd)  
@@ -45,7 +49,8 @@
 
 \seealso{
     \code{\linkS4class{DEFLP}}, \code{\linkS4class{DEFQP}},
-    \code{\linkS4class{DEFNL}}, \code{\linkS4class{PDV}}
+    \code{\linkS4class{DEFNL}}, \code{\linkS4class{DEFCP}},
+    \code{\linkS4class{PDV}}
 }
 
 \keyword{optimize}

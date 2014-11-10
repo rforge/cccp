@@ -49,6 +49,7 @@ cpn <- function(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL, op
         }
     }
     cpdef <- new("DEFCP",
+                 q = c(rep(0, n), 1),
                  x0 = x0,
                  f0 = f0,
                  nlfList = nlfList,
@@ -60,17 +61,6 @@ cpn <- function(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL, op
                  mnl = mnl,
                  H = matrix(0, nrow = n, ncol = n),
                  ctrl = optctrl)
-    cpnl <- as(cpdef, "DEFNL")
-    cpsol <- cps(cpnl)
-    cpsol@x <- cpsol@x[-1]
-    if(length(nlfList) > 0){
-        cpsol@s[[1]]@u <- matrix(cpsol@s[[1]]@u[-1, 1])
-        cpsol@s[[1]]@dims <- cpsol@s[[1]]@dims - 1L
-        cpsol@z[[1]]@u <- matrix(cpsol@z[[1]]@u[-1, 1])
-        cpsol@z[[1]]@dims <- cpsol@z[[1]]@dims - 1L
-    } else {
-        cpsol@s <- cpsol@s[-1]
-        cpsol@z <- cpsol@z[-1]
-    }
+    cpsol <- cps(cpdef)
     return(cpsol)   
 }

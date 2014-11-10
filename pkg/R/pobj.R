@@ -22,3 +22,11 @@ setMethod("pobj", signature = c("numeric", "DEFNL"), function(pdv, cpd){
 setMethod("pobj", signature = c("PDV", "DEFNL"), function(pdv, cpd){
     drop(crossprod(pdv@x, cpd@q))
 })
+##
+## Methods for value of primal objective at point 'x' of 'DEFCP'
+setMethod("pobj", signature = c("numeric", "DEFCP"), function(pdv, cpd){
+    drop(crossprod(pdv, cpd@q))
+})
+setMethod("pobj", signature = c("PDV", "DEFCP"), function(pdv, cpd){
+    drop(crossprod(pdv@x, cpd@q))
+})

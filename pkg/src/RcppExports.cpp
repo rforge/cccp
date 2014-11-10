@@ -37,6 +37,88 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// ntsc_n
+SEXP ntsc_n(SEXP ss, SEXP zs);
+RcppExport SEXP cccp_ntsc_n(SEXP ssSEXP, SEXP zsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type ss(ssSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type zs(zsSEXP );
+        SEXP __result = ntsc_n(ss, zs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ntsc_l
+SEXP ntsc_l(SEXP ss, SEXP zs);
+RcppExport SEXP cccp_ntsc_l(SEXP ssSEXP, SEXP zsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type ss(ssSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type zs(zsSEXP );
+        SEXP __result = ntsc_l(ss, zs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ntsc_s
+SEXP ntsc_s(SEXP ss, SEXP zs);
+RcppExport SEXP cccp_ntsc_s(SEXP ssSEXP, SEXP zsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type ss(ssSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type zs(zsSEXP );
+        SEXP __result = ntsc_s(ss, zs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ntsc_p
+SEXP ntsc_p(SEXP ss, SEXP zs, SEXP ms);
+RcppExport SEXP cccp_ntsc_p(SEXP ssSEXP, SEXP zsSEXP, SEXP msSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type ss(ssSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type zs(zsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type ms(msSEXP );
+        SEXP __result = ntsc_p(ss, zs, ms);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ntsu_l
+SEXP ntsu_l(SEXP Ws, SEXP ss, SEXP zs);
+RcppExport SEXP cccp_ntsu_l(SEXP WsSEXP, SEXP ssSEXP, SEXP zsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type Ws(WsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type ss(ssSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type zs(zsSEXP );
+        SEXP __result = ntsu_l(Ws, ss, zs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // sdot_nls
 double sdot_nls(SEXP us, SEXP vs);
 RcppExport SEXP cccp_sdot_nls(SEXP usSEXP, SEXP vsSEXP) {
@@ -64,6 +146,37 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< SEXP >::type vs(vsSEXP );
         Rcpp::traits::input_parameter< SEXP >::type ms(msSEXP );
         double __result = sdot_p(us, vs, ms);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// snrm2_nls
+double snrm2_nls(SEXP us);
+RcppExport SEXP cccp_snrm2_nls(SEXP usSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        double __result = snrm2_nls(us);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// snrm2_p
+double snrm2_p(SEXP us, SEXP ms);
+RcppExport SEXP cccp_snrm2_p(SEXP usSEXP, SEXP msSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type ms(msSEXP );
+        double __result = snrm2_p(us, ms);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
@@ -235,37 +348,6 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
-// snrm2_nls
-double snrm2_nls(SEXP us);
-RcppExport SEXP cccp_snrm2_nls(SEXP usSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
-        double __result = snrm2_nls(us);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// snrm2_p
-double snrm2_p(SEXP us, SEXP ms);
-RcppExport SEXP cccp_snrm2_p(SEXP usSEXP, SEXP msSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
-        Rcpp::traits::input_parameter< SEXP >::type ms(msSEXP );
-        double __result = snrm2_p(us, ms);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
 // sone_nl
 SEXP sone_nl(SEXP us);
 RcppExport SEXP cccp_sone_nl(SEXP usSEXP) {
@@ -360,6 +442,75 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// sslb_nl
+SEXP sslb_nl(SEXP us, SEXP lambdas, SEXP invs);
+RcppExport SEXP cccp_sslb_nl(SEXP usSEXP, SEXP lambdasSEXP, SEXP invsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type lambdas(lambdasSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
+        SEXP __result = sslb_nl(us, lambdas, invs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// sslb_s
+SEXP sslb_s(SEXP us, SEXP lambdas, SEXP invs);
+RcppExport SEXP cccp_sslb_s(SEXP usSEXP, SEXP lambdasSEXP, SEXP invsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type lambdas(lambdasSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
+        SEXP __result = sslb_s(us, lambdas, invs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// sslb_p
+SEXP sslb_p(SEXP us, SEXP lambdas, SEXP invs, SEXP ms);
+RcppExport SEXP cccp_sslb_p(SEXP usSEXP, SEXP lambdasSEXP, SEXP invsSEXP, SEXP msSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type lambdas(lambdasSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type ms(msSEXP );
+        SEXP __result = sslb_p(us, lambdas, invs, ms);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ssnt_n
+SEXP ssnt_n(SEXP us, SEXP Ws, SEXP invs);
+RcppExport SEXP cccp_ssnt_n(SEXP usSEXP, SEXP WsSEXP, SEXP invsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type Ws(WsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
+        SEXP __result = ssnt_n(us, Ws, invs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // ssnt_l
 SEXP ssnt_l(SEXP us, SEXP Ws, SEXP invs);
 RcppExport SEXP cccp_ssnt_l(SEXP usSEXP, SEXP WsSEXP, SEXP invsSEXP) {
@@ -388,6 +539,24 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< SEXP >::type Ws(WsSEXP );
         Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
         SEXP __result = ssnt_s(us, Ws, invs);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// ssnt_p
+SEXP ssnt_p(SEXP us, SEXP Ws, SEXP transs, SEXP invs);
+RcppExport SEXP cccp_ssnt_p(SEXP usSEXP, SEXP WsSEXP, SEXP transsSEXP, SEXP invsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< SEXP >::type us(usSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type Ws(WsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type transs(transsSEXP );
+        Rcpp::traits::input_parameter< SEXP >::type invs(invsSEXP );
+        SEXP __result = ssnt_p(us, Ws, transs, invs);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

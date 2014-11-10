@@ -37,7 +37,7 @@ cpn(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL,
 }
 
 \value{
-  Currently returns an object of S4-class \code{DEFCP}.
+  Returns an object of S4-class \code{CPS}.
 }
 
 \keyword{optimize}
