@@ -22,8 +22,12 @@ Objects can be created by calls of the form \code{new("DEFNL",
     \item{\code{q}:}{Object of class \code{"vector"}: A \eqn{(n \times
 	1)} vector of the coefficients in the objective function.}
     \item{\code{nlfList}:}{Object of class \code{"list"}: A list with the
-      non-linear constraint function(s) (first argument \code{x} as its
-      elements.}
+      scalar-valued non-linear constraint function(s) (first argument
+      \code{x} as its elements.}
+    \item{\code{nlgList}:}{Object of class \code{"list"}: A list with the
+      gradient function(s) (first argument \code{x} as its elements.}
+    \item{\code{nlhList}:}{Object of class \code{"list"}: A list with the
+      Hessian function(s) (first argument \code{x} as its elements.}
     \item{\code{cList}:}{Object of class \code{"list"}: The elements are
       the constraints. The first element is pertinent to the nonlinear
       constraints (object of S4-class \code{NLFC}) and the remaining

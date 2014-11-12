@@ -3,6 +3,7 @@
 ## Demo for solving a linear objective with nonlinear constraints
 ## (Example taken from cvxopt's userguide)
 ##
+require(numDeriv)
 ## Creating objective
 q <- c(rep(1, 2), rep(0, 20))
 xnames <- c("W", "H",
@@ -58,10 +59,24 @@ f2 <- function(x) -x[14] + Amin / x[19]
 f3 <- function(x) -x[15] + Amin / x[20]
 f4 <- function(x) -x[16] + Amin / x[21]
 f5 <- function(x) -x[17] + Amin / x[22]
+## Gradient functions
+g1 <- function(x, func = f1) grad(func = func, x = x)
+g2 <- function(x, func = f2) grad(func = func, x = x)
+g3 <- function(x, func = f3) grad(func = func, x = x)
+g4 <- function(x, func = f4) grad(func = func, x = x)
+g5 <- function(x, func = f5) grad(func = func, x = x)
+## Hessian functions
+h1 <- function(x, func = f1) hessian(func = func, x = x)
+h2 <- function(x, func = f2) hessian(func = func, x = x)
+h3 <- function(x, func = f3) hessian(func = func, x = x)
+h4 <- function(x, func = f4) hessian(func = func, x = x)
+h5 <- function(x, func = f5) hessian(func = func, x = x)
 ## Invoking 'cpl'
 x0 <- rep(1, 22)
 ans <- cpl(x0 = x0, q = q,
            nlfList = list(f1, f2, f3, f4, f5),
+           nlgList = list(g1, g2, g3, g4, g5),
+           nlhList = list(h1, h2, h3, h4, h5),
            cList = list(nno1))
 xsol <- getx(ans)
 names(xsol) <- xnames

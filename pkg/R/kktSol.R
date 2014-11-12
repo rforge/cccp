@@ -139,4 +139,3 @@ setMethod("kktSOL", signature = "DEFCP", function(cpd, SolKkt, W, kktslv, refine
     })
     return(SolKkt)
 })
-

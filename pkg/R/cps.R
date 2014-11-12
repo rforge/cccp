@@ -76,6 +76,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         pres <- max(resy / resy0, resz / resz0)
         dres <- resx / resx0
         CurSol@x <- CurPdv@x
+        if(is.null(names(cpd@q))){
+            names(CurSol@x) <- paste("x", 1:n, sep = "")
+        } else{
+            names(CurSol@x) <- names(cpd@q)
+        }
         CurSol@y <- CurPdv@y
         CurSol@s <- CurPdv@s
         CurSol@z <- CurPdv@z
@@ -172,6 +177,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         if((pres <= ctrl@feastol) & (dres <= ctrl@feastol) &
            (gap <= ctrl@abstol || checkRgap)){
             CurSol@x <- CurPdv@x / CurPdv@tau
+            if(is.null(names(cpd@q))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else{
+                names(CurSol@x) <- names(cpd@q)
+            }
             CurSol@y <- CurPdv@y / CurPdv@tau
             CurSol@s <- lapply(CurPdv@s, function(s){
                 s@u <- s@u / CurPdv@tau
@@ -198,6 +208,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         } else if((!is.null(pinfres)) && (pinfres <= ctrl@feastol)){
             denom <- -hz - by
             CurSol@x <- numeric(0)
+            if(is.null(names(cpd@q))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else{
+                names(CurSol@x) <- names(cpd@q)
+            }
             CurSol@y <- CurPdv@y / denom
             CurSol@s <- list()
             CurSol@z <- lapply(CurPdv@z, function(z){
@@ -220,6 +235,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         } else if((!is.null(dinfres)) && (dinfres <= ctrl@feastol)){
             denom <- -cx
             CurSol@x <- CurPdv@x / denom
+            if(is.null(names(cpd@q))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else{
+                names(CurSol@x) <- names(cpd@q)
+            }
             CurSol@y <- numeric(0)
             CurSol@s <- lapply(CurPdv@s, function(s){
                 s@u <- s@u / denom
@@ -259,6 +279,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
         ans1 <- try(with(kktslv@items, kktslv@f(x = -cpd@q, y = cpd@b, z = hL)))
         if(class(ans1) == "try-error"){
             CurSol@x <- CurPdv@x / CurPdv@tau
+            if(is.null(names(cpd@q))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else{
+                names(CurSol@x) <- names(cpd@q)
+            }
             CurSol@y <- CurPdv@y / CurPdv@tau
             CurSol@s <- lapply(CurPdv@s, function(s){
                 s@u <- s@u / CurPdv@tau
@@ -399,6 +424,11 @@ setMethod("cps", signature = "DEFLP", function(cpd){
     ## Preparing CPS-object for non-convergence  
     
     CurSol@x <- CurPdv@x / CurPdv@tau
+    if(is.null(names(cpd@q))){
+        names(CurSol@x) <- paste("x", 1:n, sep = "")
+    } else{
+        names(CurSol@x) <- names(cpd@q)
+    }
     CurSol@y <- CurPdv@y / CurPdv@tau
     CurSol@s <- lapply(CurPdv@s, function(s){
         s@u <- s@u / CurPdv@tau
@@ -438,6 +468,15 @@ setMethod("cps", signature = "DEFQP", function(cpd){
         if(class(Pinv) == "try-error") stop("Problem is unbounded below.\n")
         if(nrow(cpd@A) < 1){ ## neither equality consztraints
             CurSol@x <- drop(Pinv %*% cpd@q)
+            if(is.null(dimnames(cpd@P))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else {
+                if(is.null(colnames(cpd@P))){
+                    names(CurSol@x) <- rownames(cpd@P)
+                } else {
+                    names(CurSol@x) <- colnames(cpd@P)
+                }
+            }   
             CurSol@pobj <- pobj(CurSol@x, cpd)
             CurSol@status <- "optimal"
             return(CurSol)
@@ -449,6 +488,15 @@ setMethod("cps", signature = "DEFQP", function(cpd){
             if(class(Sinv) == "try-error") stop("Inversion of Schur complement failed.\n")
             CurSol@y <- CurPdv@y <- drop(Sinv %*% (cpd@A %*% Pinvq + cpd@b))
             CurSol@x <- CurPdv@x <- drop(Pinv %*% (-crossprod(cpd@A, CurSol@y) - cpd@q))
+            if(is.null(dimnames(cpd@P))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else {
+                if(is.null(colnames(cpd@P))){
+                    names(CurSol@x) <- rownames(cpd@P)
+                } else {
+                    names(CurSol@x) <- colnames(cpd@P)
+                }
+            }   
             CurSol@pobj <- pobj(CurPdv, cpd)
             CurSol@dobj <- dobj(CurPdv, cpd)
             ## primal infeasibilty
@@ -559,6 +607,15 @@ setMethod("cps", signature = "DEFQP", function(cpd){
         if((pres <= ctrl@feastol) & (dres <= ctrl@feastol) &
            (gap <= ctrl@abstol || checkRgap)){
             CurSol@x <- CurPdv@x 
+            if(is.null(dimnames(cpd@P))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else {
+                if(is.null(colnames(cpd@P))){
+                    names(CurSol@x) <- rownames(cpd@P)
+                } else {
+                    names(CurSol@x) <- colnames(cpd@P)
+                }
+            }   
             CurSol@y <- CurPdv@y
             CurSol@s <- CurPdv@s
             CurSol@z <- CurPdv@z
@@ -686,6 +743,15 @@ setMethod("cps", signature = "DEFQP", function(cpd){
     ## Preparing CPS-object for non-convergence  
     
     CurSol@x <- CurPdv@x
+    if(is.null(dimnames(cpd@P))){
+        names(CurSol@x) <- paste("x", 1:n, sep = "")
+    } else {
+        if(is.null(colnames(cpd@P))){
+            names(CurSol@x) <- rownames(cpd@P)
+        } else {
+            names(CurSol@x) <- colnames(cpd@P)
+        }
+    }   
     CurSol@y <- CurPdv@y
     CurSol@s <- CurPdv@s
     CurSol@z <- CurPdv@z
@@ -741,14 +807,15 @@ setMethod("cps", signature = "DEFNL", function(cpd){
     ##
     for(i in 0:(ctrl@maxiters + 1)){
         ## Setting Df to 'G' slot of NLFC
-        cpd@cList[[1]]@G <- do.call("rbind", lapply(cpd@nlfList, grad, x = CurPdv@x))
+        cpd@cList[[1]]@G <- do.call("rbind", lapply(cpd@nlgList, function(gf) gf(CurPdv@x)))
         ## Setting f to 'h' slot of NLFC
         cpd@cList[[1]]@h@u <- matrix(unlist(lapply(
             cpd@nlfList, function(nlf) nlf(CurPdv@x))),
                                      nrow = cpd@mnl, ncol = 1)
         ## Computing Hessian and setting to cpd@H
         cpd@H <- Reduce("+", lapply(1:cpd@mnl, function(j){
-            matrix(CurPdv@z[[1]]@u[j, 1] * hessian(func = cpd@nlfList[[j]], x = CurPdv@x))
+            hf <- cpd@nlhList[[j]]
+            matrix(CurPdv@z[[1]]@u[j, 1] * hf(CurPdv@x))
         }))
         ## Computing gap
         gap <- sum(sapply(idx, function(j) udot(CurPdv@s[[j]], CurPdv@z[[j]])))
@@ -804,7 +871,16 @@ setMethod("cps", signature = "DEFNL", function(cpd){
         }
         if((pres <= ctrl@feastol) & (dres <= ctrl@feastol) &
            (gap <= ctrl@abstol || checkRgap)){
-            CurSol@x <- CurPdv@x 
+            CurSol@x <- CurPdv@x
+            if(is.null(names(cpd@x0)) && is.null(names(cpd@q))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else {
+                if(is.null(names(cpd@x0))){
+                    names(CurSol@x) <- names(cpd@q)
+                } else {
+                    names(CurSol@x) <- names(cpd@x0)
+                }
+            }
             CurSol@y <- CurPdv@y
             CurSol@s <- CurPdv@s
             CurSol@z <- CurPdv@z
@@ -851,6 +927,15 @@ setMethod("cps", signature = "DEFNL", function(cpd){
             SolKkt <- try(kktSOL(cpd, SolKkt, W, kktslv, refine = ctrl@refine))
             if(class(SolKkt) == "try-error"){
                 CurSol@x <- CurPdv@x
+                if(is.null(names(cpd@x0)) && is.null(names(cpd@q))){
+                    names(CurSol@x) <- paste("x", 1:n, sep = "")
+                } else {
+                    if(is.null(names(cpd@x0))){
+                        names(CurSol@x) <- names(cpd@q)
+                    } else {
+                        names(CurSol@x) <- names(cpd@x0)
+                    }
+                }
                 CurSol@y <- CurPdv@y
                 CurSol@s <- CurPdv@s
                 CurSol@z <- CurPdv@z
@@ -900,8 +985,6 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 if(any(is.nan(Fval))){
                     newFval <- NULL
                 } else {
-                    newFval <- matrix(Fval, nrow = mnl, ncol = 1)
-                    newDF <- matrix(do.call("rbind", lapply(cpd@nlfList, grad, x = x)))
                     backtrack = FALSE
                 }
                 step <- step * ctrl@beta
@@ -934,7 +1017,7 @@ setMethod("cps", signature = "DEFNL", function(cpd){
                 cpd@cList[[1]]@h@u <- matrix(unlist(lapply(
                     cpd@nlfList, function(f) f(NewPdv@x))), ncol = 1) ## newf
                 cpd@cList[[1]]@G <- do.call("rbind", lapply(
-                    cpd@nlfList, grad, x = NewPdv@x)) ## newDf
+                    cpd@nlgList, function(gf) gf(x = NewPdv@x))) ## newDf
 
                 ## Residuals
                 ## Dual Residuals
@@ -1084,6 +1167,15 @@ setMethod("cps", signature = "DEFNL", function(cpd){
     ## Preparing CPS-object for non-convergence  
     
     CurSol@x <- CurPdv@x
+    if(is.null(names(cpd@x0)) && is.null(names(cpd@q))){
+        names(CurSol@x) <- paste("x", 1:n, sep = "")
+    } else {
+        if(is.null(names(cpd@x0))){
+            names(CurSol@x) <- names(cpd@q)
+        } else {
+            names(CurSol@x) <- names(cpd@x0)
+        }
+    }
     CurSol@y <- CurPdv@y
     CurSol@s <- CurPdv@s
     CurSol@z <- CurPdv@z
@@ -1113,38 +1205,33 @@ setMethod("cps", signature = "DEFCP", function(cpd){
     RelaxedIters <- 0L
     n <- cpd@n
     ne <- n + 1L
+    ## including objective to other nonlinear constraints, gradients and hessians, if applicable
+    cpd@nlfList <- c(cpd@f0, cpd@nlfList)
+    cpd@nlgList <- c(cpd@g0, cpd@nlgList)
+    cpd@nlhList <- c(cpd@h0, cpd@nlhList)
+    ## Adding (extended) nonlinear constraints to cList
+    if(cpd@mnl > 0){
+        cpd@cList[[1]]@G <- rbind(rep(0, n), cpd@cList[[1]]@G)
+        cpd@cList[[1]]@h@u <- rbind(0, cpd@cList[[1]]@h@u)
+        cpd@cList[[1]]@h@dims <- cpd@cList[[1]]@h@dims + 1L
+        cpd@cList[[1]]@dims <- cpd@mnl + 1L
+    } else {
+        h <- new("NLFV", u = matrix(0, nrow = 1L), dims = 1L)
+        nlfc <- new("NLFC", G = matrix(0, nrow = 1L, ncol = n), h = h, dims = 1L, vclass = "NLFV")
+        cpd@cList <- c(nlfc, cpd@cList)
+        cpd@k <- length(cpd@cList)
+    }
     ## Extending CP to epigraph-form
     ## additional variable 't' is right-added to objective/constraints
     ## linear objective
-    if(cpd@k > 0){
-        cpd@cList <- lapply(cpd@cList, function(cc){
-            cc@G <- cbind(cc@G, 0)
-            cc
-        })
-    }
-    ## including objective to other nonlinear constraints, if applicable
-    cpd@nlfList <- c(cpd@f0, cpd@nlfList)
+    cpd@cList <- lapply(cpd@cList, function(cc){
+        cc@G <- cbind(cc@G, 0)
+        cc
+    })
     mnl <- cpd@mnl <- cpd@mnl + 1L
-    ## creating NLFV and NLFC objects, if mnl == 0
-    f0Val <- cpd@f0(cpd@x0)
-    if(mnl < 2){
-        h <- new("NLFV", u = matrix(f0Val, nrow = 1L, ncol = 1L), dims = 1L)
-        nlfc <- new("NLFC",
-                G = matrix(0, nrow = mnl, ncol = ne),
-                h = h,
-                dims = mnl,
-                vclass = "NLFV")
-        cpd@cList <- c(nlfc, cpd@cList)
-    } else {
-        ## adding f0 as first row to existing NLFC
-        cpd@cList[[1]]@G <- cbind(cpd@cList[[1]]@G, 0)
-        cpd@cList[[1]]@G <- rbind(0, cpd@cList[[1]]@G)
-        cpd@cList[[1]]@h@u <- rbind(f0Val, cpd@cList[[1]]@h@u)
-        cpd@cList[[1]]@h@dims <- mnl
-    }
+    ## Initialize h@u and G for nonlinear constraints
+    cpd@cList[[1]]@h@u <- matrix(unlist(lapply(cpd@nlfList, function(nlf) nlf(cpd@x0))), ncol = 1)
     cpd@cList[[1]]@G[1, ne] <- -1
-    ## including nlfc to constraint list and adjusting 'k'
-    cpd@k <- length(cpd@cList)
     m <- sum(unlist(lapply(cpd@cList, function(cc) cc@dims)))    
     ## Amending LHS of equality constraints, if applicable
     if(dim(cpd@A)[1] == 0){
@@ -1177,9 +1264,7 @@ setMethod("cps", signature = "DEFCP", function(cpd){
     for(i in 0:(ctrl@maxiters + 1)){
         
         ## Setting Df to 'G' slot of NLFC
-        cpd@cList[[1]]@G[, -ne] <- do.call("rbind", lapply(cpd@nlfList, function(nlf){
-            grad(func = nlf, x = CurPdv@x[-ne])
-        }))
+        cpd@cList[[1]]@G[, -ne] <- do.call("rbind", lapply(cpd@nlgList, function(gf) gf(CurPdv@x[-ne])))
         ## Setting f to 'h' slot of NLFC
         cpd@cList[[1]]@h@u <- matrix(unlist(lapply(
             cpd@nlfList, function(nlf) nlf(CurPdv@x[-ne]))),
@@ -1187,7 +1272,8 @@ setMethod("cps", signature = "DEFCP", function(cpd){
         cpd@cList[[1]]@h@u[1, 1] <- cpd@cList[[1]]@h@u[1, 1] - CurPdv@x[ne]
         ## Computing Hessian and setting to cpd@H
         cpd@H <- Reduce("+", lapply(1:mnl, function(j){
-            matrix(CurPdv@z[[1]]@u[j, 1] * hessian(func = cpd@nlfList[[j]], x = CurPdv@x[-ne]), nrow = n, ncol = n)
+            hf <- cpd@nlhList[[j]]
+            matrix(CurPdv@z[[1]]@u[j, 1] * hf(CurPdv@x[-ne]))
         }))
         ## Computing gap
         gap <- sum(sapply(idx, function(j) udot(CurPdv@s[[j]], CurPdv@z[[j]])))
@@ -1244,7 +1330,12 @@ setMethod("cps", signature = "DEFCP", function(cpd){
         }
         if((pres <= ctrl@feastol) & (dres <= ctrl@feastol) &
            (gap <= ctrl@abstol || checkRgap)){
-            CurSol@x <- CurPdv@x[-ne] 
+            CurSol@x <- CurPdv@x[-ne]
+            if(is.null(names(cpd@x0))){
+                names(CurSol@x) <- paste("x", 1:n, sep = "")
+            } else {
+                names(CurSol@x) <- names(cpd@x0)
+            }
             CurSol@y <- CurPdv@y
             CurSol@s <- CurPdv@s
             CurSol@z <- CurPdv@z
@@ -1301,6 +1392,11 @@ setMethod("cps", signature = "DEFCP", function(cpd){
 
             if(class(SolKkt) == "try-error"){
                 CurSol@x <- CurPdv@x[-ne]
+                if(is.null(names(cpd@x0))){
+                    names(CurSol@x) <- paste("x", 1:n, sep = "")
+                } else {
+                    names(CurSol@x) <- names(cpd@x0)
+                }
                 CurSol@y <- CurPdv@y
                 CurSol@s <- CurPdv@s
                 CurSol@z <- CurPdv@z
@@ -1395,7 +1491,7 @@ setMethod("cps", signature = "DEFCP", function(cpd){
                     f(NewPdv@x[-ne])})), ncol = 1) 
                 cpd@cList[[1]]@h@u[1, 1] <- cpd@cList[[1]]@h@u[1, 1] - NewPdv@x[ne] ## newf
                 cpd@cList[[1]]@G[, -ne] <- do.call("rbind", lapply(
-                    cpd@nlfList, grad, x = NewPdv@x[-ne])) ## newDf
+                    cpd@nlgList, function(gf) gf(x = NewPdv@x[-ne]))) ## newDf
                 ## Residuals
                 ## Dual Residuals
                 newrx <- rdual(NewPdv, cpd)
@@ -1543,6 +1639,11 @@ setMethod("cps", signature = "DEFCP", function(cpd){
     ## Preparing CPS-object for non-convergence  
     
     CurSol@x <- CurPdv@x[-ne]
+    if(is.null(names(cpd@x0))){
+        names(CurSol@x) <- paste("x", 1:n, sep = "")
+    } else {
+        names(CurSol@x) <- names(cpd@x0)
+    }
     CurSol@y <- CurPdv@y
     CurSol@s <- CurPdv@s
     CurSol@z <- CurPdv@z
@@ -1572,6 +1673,10 @@ setMethod("cps", signature = "DEFCP", function(cpd){
     }
     return(CurSol)       
 })
+
+
+
+
 
 
 

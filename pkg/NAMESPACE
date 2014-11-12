@@ -5,7 +5,6 @@ useDynLib(cccp)
 import(RcppArmadillo)
 importFrom(Rcpp, evalCpp)
 import(methods)
-import(numDeriv)
 ##
 ## Export of S4-classes
 ##

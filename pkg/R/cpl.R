@@ -1,8 +1,14 @@
 ##
 ## Function for solving a linear objective with general convex and cone constraints
-cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, optctrl = ctrl()){
-    x0 <- as.vector(x0)
-    q <- as.vector(q)
+cpl <- function(x0, q, nlfList = list(), nlgList = list(), nlhList = list(), cList = list(), A = NULL, b = NULL, optctrl = ctrl()){
+    if(is.matrix(x0)){
+        warning("Matrix provided for x0, extracting first column for argument 'x0'.\n")
+        x0 <- x0[, 1]
+    }
+    if(is.matrix(q)){
+        warning("Matrix provided for q, extracting first column for argument 'q'.\n")
+        q <- q[, 1]
+    }
     n <- length(q)
     k <- length(cList)
     if(!identical(length(x0), length(q))){
@@ -14,6 +20,15 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
         ans <- cccp(P = NULL, q = q, cList = cList, A = A, b = b, optctrl = optctrl)
         return(ans)
     }
+    if(!all(unlist(lapply(nlfList, function(f) class(f) == "function")))){
+        stop("Not all list elements in 'nlfList' are functions.\n")
+    }
+    if(!all(unlist(lapply(nlgList, function(f) class(f) == "function")))){
+        stop("Not all list elements in 'nlgList' are functions.\n")
+    }
+    if(!all(unlist(lapply(nlhList, function(f) class(f) == "function")))){
+        stop("Not all list elements in 'nlhList' are functions.\n")
+    }
     if(length(cList) > 0){
         coneclasses <- unlist(lapply(cList, class))
         if(!all(coneclasses %in% c("NNOC", "SOCC", "PSDC"))){
@@ -24,6 +39,12 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
     idxnan <- which(is.nan(fDom))
     if(any(idxnan)){
         stop(paste("Initial point 'x0' is not in the domain of nonlinear convex constraint(s): ", idxnan, ".\n", sep = ""))
+    }
+    if(length(nlfList) != length(nlgList)){
+        stop("Length of lists for nonlinear functions and gradient functions do differ.\n")
+    }
+    if(length(nlfList) != length(nlhList)){
+        stop("Length of lists for nonlinear functions and Hessian functions do differ.\n")
     }
     ## creating initial NLFC object and adding to cList as first object
     h <- new("NLFV", u = matrix(0, nrow = mnl), dims = mnl)
@@ -46,6 +67,8 @@ cpl <- function(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL, opt
                  x0 = x0,
                  q = q,
                  nlfList = nlfList,
+                 nlgList = nlgList,
+                 nlhList = nlhList,
                  cList = cList,
                  A = A,
                  b = b,

@@ -25,8 +25,20 @@
     .Call('cccp_ntsc_p', PACKAGE = 'cccp', ss, zs, ms)
 }
 
+.ntsu_n <- function(Ws, ss, zs) {
+    .Call('cccp_ntsu_n', PACKAGE = 'cccp', Ws, ss, zs)
+}
+
 .ntsu_l <- function(Ws, ss, zs) {
     .Call('cccp_ntsu_l', PACKAGE = 'cccp', Ws, ss, zs)
+}
+
+.ntsu_s <- function(Ws, ss, zs) {
+    .Call('cccp_ntsu_s', PACKAGE = 'cccp', Ws, ss, zs)
+}
+
+.ntsu_p <- function(Ws, ss, zs, ms) {
+    .Call('cccp_ntsu_p', PACKAGE = 'cccp', Ws, ss, zs, ms)
 }
 
 .sdot_nls <- function(us, vs) {

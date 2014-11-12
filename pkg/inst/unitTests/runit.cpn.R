@@ -1,11 +1,11 @@
 ##
 ## Unit testing of CPN from demo
 test.CPN <- function(){
-    ## Creating objective
-    f0 <- function(x){
-        ans <- -log(1 - x[1]^2) - log(1 - x[2]^2) - log(1 - x[3]^2)
-        ans
-    }
+    if(require(numDeriv)){
+    ## Creating objective, gradient and Hessian
+    f0 <- function(x) -log(1 - x[1]^2) - log(1 - x[2]^2) - log(1 - x[3]^2)
+    g0 <- function(x, func = f0) grad(func = func, x = x)
+    h0 <- function(x, func = f0) hessian(func = func, x = x)
     ## SOC constraint
     F1 <- diag(3)
     g1 <- rep(0, 3)
@@ -19,9 +19,10 @@ test.CPN <- function(){
     F0 <- matrix(c(20, 10, 40, 10, 80, 10, 40, 10, 15), nrow = 3, ncol = 3)
     psd1 <- psdc(Flist = list(F1, F2, F3), F0 = F0)
     ## solving problem
-    ans <- cpn(x0 = c(0.5, 0.5, 0.5), f0 = f0, cList = list(soc1, psd1))
+    ans <- cpn(x0 = c(0.5, 0.5, 0.5), f0 = f0, g0 = g0, h0 = h0, cList = list(soc1, psd1))
     checkTrue(ans@status == "optimal")
     checkTrue(ans@certp <= 1e-7)
     checkTrue(ans@certd <= 1e-7)
+    }
     return()
 }

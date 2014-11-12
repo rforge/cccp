@@ -8,16 +8,15 @@
 // [[Rcpp::export(".jdot")]]
 double jdot(SEXP us, SEXP vs) {
 
-  Rcpp::NumericMatrix u(us);
-  Rcpp::NumericMatrix v(vs);
+  arma::mat ua = Rcpp::as<arma::mat>(us);
+  arma::mat va = Rcpp::as<arma::mat>(vs);
   double a = 0.0;
-  int n = u.nrow();
+  int n = ua.n_rows;
 
-  a = u(0, 0) * v(0, 0); 
+  a = ua(0, 0) * va(0, 0);
   for(int i = 1; i < n; i++){
-    a -= u(i, 0) * v(i, 0);
+    a -= ua(i, 0) * va(i, 0);
   }
-
   return(a);
 }
 

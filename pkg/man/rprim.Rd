@@ -1,9 +1,6 @@
 \name{rprim}
 \alias{rprim}
-\alias{rprim,PDV,DEFCP-method}
-\alias{rprim,PDV,DEFNL-method}
-\alias{rprim,PDV,DEFLP-method}
-\alias{rprim,PDV,DEFQP-method}
+\alias{rprim,PDV,CPD-method}
 
 \title{
   Residuals of primal constraints
@@ -15,15 +12,12 @@
 }
 
 \usage{
-\S4method{rprim}{PDV,DEFCP}(pdv, cpd)  
-\S4method{rprim}{PDV,DEFNL}(pdv, cpd)  
-\S4method{rprim}{PDV,DEFLP}(pdv, cpd)  
-\S4method{rprim}{PDV,DEFQP}(pdv, cpd)  
+\S4method{rprim}{PDV,CPD}(pdv, cpd)  
 }
 
 \arguments{
   \item{pdv}{An object of S4-class \code{PDV} for computing the dual residuals.}
-  \item{cpd}{An object belonging to the S4-class union \code{QPD}.}
+  \item{cpd}{An object belonging to the S4-class union \code{CPD}.}
   
 }
 

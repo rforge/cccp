@@ -23,11 +23,19 @@ Objects can be created by calls of the form \code{new("DEFCP",
 	1)} vector of initial values. This point must be in the domaine
       of the non-linear constraints.}
     \item{\code{f0}:}{Object of class \code{"function"}: The objective
-      function: a convex and twice-differentiable function (first
-      argument \code{x} as its element).}
+      function: a scalar-valued, convex and twice-differentiable
+      function (first argument \code{x} as its element).}
+    \item{\code{g0}:}{Object of class \code{"function"}: The gradient
+      function of the objective (first argument \code{x} as its element).}
+    \item{\code{h0}:}{Object of class \code{"function"}: The Hessian
+      function of the objective (first argument \code{x} as its element).}
     \item{\code{nlfList}:}{Object of class \code{"list"}: A list with the
       non-linear constraint function(s) (first argument \code{x} as its
       elements).}
+    \item{\code{nlgList}:}{Object of class \code{"list"}: A list with the
+      gradient function(s) (first argument \code{x} as its elements.}
+    \item{\code{nlhList}:}{Object of class \code{"list"}: A list with the
+      Hessian function(s) (first argument \code{x} as its elements.}
     \item{\code{cList}:}{Object of class \code{"list"}: The elements are
       the constraints. The first element is pertinent to the nonlinear
       constraints (object of S4-class \code{NLFC}) and the remaining

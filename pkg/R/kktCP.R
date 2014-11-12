@@ -12,16 +12,16 @@ kktCP <- function(cpd){
         K[1:n, -(1:n)] <- t(cpd@A[, -ne])
         We <- W
         if(cpd@mnl > 1){
-            We[[1]]@W$dnl <- We[[1]]@W$dnl[-ne] 
-            We[[1]]@W$dnli <- We[[1]]@W$dnli[-ne] 
+            We[[1]]@W$dnl <- matrix(We[[1]]@W$dnl[-1], ncol = 1) 
+            We[[1]]@W$dnli <- matrix(We[[1]]@W$dnli[-1], ncol = 1) 
         } else {
             idx <- idx[-1]
         }
         GGList <- lapply(cpd@cList, function(cc) cc@G)
         GList <- lapply(GGList, function(G) G[, -ne])
         if(cpd@mnl > 1){
-            GList[[1]] <- GList[[1]][-1, ] ## removing first row pertinent to f0
-        } 
+            GList[[1]] <- matrix(GList[[1]][-1, ], ncol = n) ## removing first row pertinent to f0
+        }
         for(j in idx){
             WitG <- usnt(GList[[j]], We[[j]], trans = TRUE, inv = TRUE)
             WiWitG <- usnt(WitG@u, We[[j]], trans = FALSE, inv = TRUE)
@@ -36,18 +36,18 @@ kktCP <- function(cpd){
             uz <- z
             idx <- 1:cpd@k
             if(cpd@mnl > 1){
-                uz[[1]]@u <- uz[[1]]@u[-ne] ## removing slack pertinent to f0
+                uz[[1]]@u <- matrix(uz[[1]]@u[-1], ncol = 1) ## removing slack pertinent to f0
             } else {
                 idx <- idx[-1]
             }
             We <- W
             if(cpd@mnl > 1){
-                We[[1]]@W@dnl <- We[[1]]@W$dnl[-ne] ## removing scaling pertinent to f0
-                We[[1]]@W@dnli <- We[[1]]@W$dnli[-ne] ## removing inverse scaling pertinent to f0
+                We[[1]]@W$dnl <- matrix(We[[1]]@W$dnl[-1, 1], ncol = 1) ## removing scaling pertinent to f0
+                We[[1]]@W$dnli <- matrix(We[[1]]@W$dnli[-1, 1], ncol = 1) ## removing inverse scaling pertinent to f0
             } 
             GList <- lapply(GGList, function(G) G[, -ne])
             if(cpd@mnl > 1){
-                GList[[1]] <- GList[[1]][-1, ] ## removing first row pertinent to f0
+                GList[[1]] <- matrix(GList[[1]][-1, ], ncol = n) ## removing first row pertinent to f0
             }
 
             if(length(idx) > 0){

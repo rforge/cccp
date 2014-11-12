@@ -11,8 +11,8 @@
 }
 
 \usage{
-cpl(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL,
-    optctrl = ctrl())
+cpl(x0, q, nlfList = list(), nlgList = list(), nlhList = list(),
+    cList = list(), A = NULL, b = NULL, optctrl = ctrl())
 }
 
 \arguments{
@@ -25,6 +25,12 @@ cpl(x0, q, nlfList = list(), cList = list(), A = NULL, b = NULL,
     constraints as its elements. The functions have to be specified with
     \code{x} as their first argument and must be casted in implicit
     form, \emph{i.e.} \eqn{f(x) \le 0}.}
+  \item{nlgList}{A \code{list} object containing the gradient functions
+    as its elements. The functions have to be specified with \code{x} as
+    their first argument.}
+  \item{nlhList}{A \code{list} object containing the Hessian functions
+    as its elements. The functions have to be specified with \code{x} as
+    their first argument.}
   \item{cList}{A \code{list} object containing the cone
     constraints. Elements must be of either S4-class \code{NNOC}, or
     \code{SOCC}, or \code{PSDC} or an empty list in case of no

@@ -1,7 +1,11 @@
 ##
 ## Function for solving a convex objective with general convex and cone constraints
-cpn <- function(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL, optctrl = ctrl()){
-    x0 <- as.vector(x0)
+cpn <- function(x0, f0, g0, h0, nlfList = list(), nlgList = list(), nlhList = list(),
+                cList = list(), A = NULL, b = NULL, optctrl = ctrl()){
+    if(is.matrix(x0)){
+        warning("Matrix provided for x0, extracting first column for argument 'x0'.\n")
+        x0 <- x0[, 1]
+    }
     n <- length(x0)
     k <- length(cList)
     ## Checking whether x0 is in the domain of nonlinear objective
@@ -17,6 +21,22 @@ cpn <- function(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL, op
     }
     mnl <- length(nlfList)
     if(mnl > 0){
+        ## Checking length of lists and elements
+        if(mnl != length(nlgList)){
+            stop("Length of lists for nonlinear functions and gradient functions do differ.\n")
+        }
+        if(mnl != length(nlhList)){
+            stop("Length of lists for nonlinear functions and Hessian functions do differ.\n")
+        }
+        if(!all(unlist(lapply(nlfList, function(f) class(f) == "function")))){
+            stop("Not all list elements in 'nlfList' are functions.\n")
+        }
+        if(!all(unlist(lapply(nlgList, function(f) class(f) == "function")))){
+            stop("Not all list elements in 'nlgList' are functions.\n")
+        }
+        if(!all(unlist(lapply(nlhList, function(f) class(f) == "function")))){
+            stop("Not all list elements in 'nlhList' are functions.\n")
+        }
         ## Checking whether x0 is in the domain of nonlinear constraint(s)
         fDom <- unlist(lapply(nlfList, function(fcc) fcc(x0)))
         idxnan <- which(is.nan(fDom))
@@ -52,7 +72,11 @@ cpn <- function(x0, f0, nlfList = list(), cList = list(), A = NULL, b = NULL, op
                  q = c(rep(0, n), 1),
                  x0 = x0,
                  f0 = f0,
+                 g0 = g0,
+                 h0 = h0,
                  nlfList = nlfList,
+                 nlgList = nlgList,
+                 nlhList = nlhList,
                  cList = cList,
                  A = A,
                  b = b,
