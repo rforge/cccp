@@ -14,7 +14,7 @@ setMethod("unrm2", signature = "SOCV", function(u){
     .snrm2_nls(drop(u@u))
 })
 ##
-## Norm of a point in SOC cones
+## Norm of a point in PSD cones
 setMethod("unrm2", signature = "PSDV", function(u){
     .snrm2_p(drop(u@u), u@dims)
 })
