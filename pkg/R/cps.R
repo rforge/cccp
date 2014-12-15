@@ -467,7 +467,7 @@ setMethod("cps", signature = "DEFQP", function(cpd){
         Pinv <- try(solve(cpd@P))
         if(class(Pinv) == "try-error") stop("Problem is unbounded below.\n")
         if(nrow(cpd@A) < 1){ ## neither equality consztraints
-            CurSol@x <- drop(Pinv %*% cpd@q)
+            CurSol@x <- drop(solve(cpd@P, -cpd@q))
             if(is.null(dimnames(cpd@P))){
                 names(CurSol@x) <- paste("x", 1:n, sep = "")
             } else {
