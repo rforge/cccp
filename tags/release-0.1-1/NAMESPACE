@@ -1,0 +1,84 @@
+##
+## Import directives
+##
+useDynLib(cccp)
+import(RcppArmadillo)
+importFrom(Rcpp, evalCpp)
+import(methods)
+##
+## Export of S4-classes
+##
+exportClasses(
+    "CPD",
+    "CPS",
+    "CTRL",
+    "DEFCP",
+    "DEFLP",
+    "DEFQP",
+    "DEFNL",
+    "KKTSLV",
+    "PDV",
+    "LNLV",
+    "NLFV",
+    "NLFC",
+    "NLFS",
+    "NNOV",
+    "NNOC",
+    "NNOS",
+    "PSDV",
+    "PSDC",
+    "PSDS",
+    "SOCV",
+    "SOCC",
+    "SOCS"
+    )
+##
+## Export of Methods
+##
+exportMethods(
+    "cps",
+    "dgap",
+    "dobj",
+    "gets",
+    "getx",
+    "gety",
+    "getz",
+    "initp",
+    "kktRES",
+    "kktSOL",
+    "ntsc",
+    "ntsu",
+    "pobj",
+    "rcent",
+    "rdual",
+    "rprim",
+    "jdot",
+    "jnrm2",
+    "udot",
+    "uinv",
+    "umat",
+    "umsa",
+    "umss",
+    "unrm2",
+    "uone",
+    "uprd",
+    "uslb",
+    "usnt"
+    )
+##
+## Export of functions
+##
+export(
+    "cccp",
+    "cpd",
+    "cpl",
+    "cpn",
+    "ctrl",
+    "kktCP",
+    "kktSOLVE",
+    "l1",
+    "nlfc",
+    "nnoc",
+    "psdc",
+    "socc"
+    )
