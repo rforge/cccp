@@ -3,8 +3,8 @@
  * Header file for package cccp3
  *
 */
-#ifndef CCCP3_H
-#define CCCP3_H
+#ifndef CCCP_H
+#define CCCP_H
 
 #ifndef ARMA_H
 #define ARMA_H
@@ -54,6 +54,11 @@ mat ssnt_s(mat s, std::map<std::string,mat> W, bool invers, bool transp);
 double feval(mat x, Rcpp::Function Rf);
 vec geval(mat x, Rcpp::Function Rf);
 mat heval(mat x, Rcpp::Function Rf);
+
+// Objective, Gradient and Hessian functions for risk parity
+double rpp_f0(mat x, mat P, mat mrc);
+mat rpp_g0(mat x, mat P, mat mrc);
+mat rpp_h0(mat x, mat P, mat mrc);
 
 #include "CPG.h"
 

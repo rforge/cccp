@@ -1,4 +1,4 @@
-#include "cccp.h"
+#include "cccp3.h"
 
 #ifndef ARMA_H
 #define ARMA_H
@@ -627,5 +627,22 @@ mat heval(mat x, Rcpp::Function Rf){
   mat ans;
   ans = Rcpp::as<mat>(Rf(Rcpp::wrap(x)));
 
+  return ans;
+}
+/*
+ * Objective, Gradient and Hessian functions for Risk Parity
+*/
+double rpp_f0(mat x, mat P, mat mrc){
+  double ans = (0.5 * x.t() * P * x - dot(mrc, log(x))).at(0, 0);
+  return ans;
+}
+mat rpp_g0(mat x, mat P, mat mrc){
+  mat ans = P * x - mrc / x;
+  return ans;
+}
+mat rpp_h0(mat x, mat P, mat mrc){
+  mat ans = zeros(P.n_cols, P.n_cols);
+  ans = diagmat(mrc / (x % x)); 
+  ans += P;  
   return ans;
 }
