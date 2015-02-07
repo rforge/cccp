@@ -646,3 +646,31 @@ mat rpp_h0(mat x, mat P, mat mrc){
   ans += P;  
   return ans;
 }
+
+/*
+ * Function value, Gradient and Hessian for geometric programs
+*/
+
+std::vector<mat> fgp(mat x, mat F, mat g){
+  std::vector<mat> ans;
+  double ysum, ymax;
+  mat y, fval(1, 1), gval(F.n_cols, 1), hval(F.n_cols, F.n_cols), Fisc;
+
+  y = F * x + g;
+  ymax = y.max();
+  y = exp(y - ymax);
+  ysum = norm(y, 1);
+  fval(0, 0) = ymax + log(ysum);
+
+  y /= ysum;
+  gval = F.t() * y;
+
+  Fisc = sqrt(diagmat(y)) * (F - ones(F.n_rows, 1) * gval.t());
+  hval = Fisc.t() * Fisc;
+
+  ans.push_back(fval);
+  ans.push_back(gval);
+  ans.push_back(hval);
+
+  return ans;
+}

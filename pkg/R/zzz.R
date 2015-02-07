@@ -2,9 +2,6 @@ loadModule("CPG", TRUE)
 
 evalqOnLoad({
 ##
-## Class union of convex program definitions
-setClassUnion("CPD", members = c("Rcpp_DLP", "Rcpp_DQP", "Rcpp_DNL", "Rcpp_DCP"))
-##
 ## show-methods for reference objects
 setMethod("show", "Rcpp_CTRL", function(object){
     cat("Control parameters used in optimization:\n\n")
@@ -129,7 +126,7 @@ setMethod("show", signature = "Rcpp_CPS", function(object){
     }
     cat(paste("Status of solution:", object$status, "\n"))
     cat(paste("Count of iterations:", object$niter, "\n\n"))
-    cat("Solutions are contained in 'pdv'.\n")
+    cat("Solutions are contained in 'PDV'.\n")
     cat("Use 'getx()', 'gety()', 'gets()' and 'getz()', respectively.\n")
 })
 ## cps-methods

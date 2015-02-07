@@ -3,8 +3,8 @@
  * Header file for package cccp3
  *
 */
-#ifndef CCCP_H
-#define CCCP_H
+#ifndef CCCP3_H
+#define CCCP3_H
 
 #ifndef ARMA_H
 #define ARMA_H
@@ -59,6 +59,9 @@ mat heval(mat x, Rcpp::Function Rf);
 double rpp_f0(mat x, mat P, mat mrc);
 mat rpp_g0(mat x, mat P, mat mrc);
 mat rpp_h0(mat x, mat P, mat mrc);
+
+// Function value, Gradient and Hessian for geometric programs
+std::vector<mat> fgp(mat x, mat F, mat g);
 
 #include "CPG.h"
 
