@@ -2,7 +2,7 @@
 ## Import directives
 ##
 import(Rcpp, methods)
-useDynLib(cccp)
+useDynLib(cccp, .registration=TRUE)
 ##
 ## Export directives
 ##
